@@ -594,7 +594,7 @@
         \textcopyright{} \@DegreeYear{} \@author
     \end{center}
     \vspace*{\fill}
-    \newpage
+    % \newpage
 
     \setcounter{secnumdepth}{-1}% We don't want chapter numbers until later, 
                                 % So let's kill off the table of contents depth detector until we want to start counting.
