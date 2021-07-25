@@ -51,7 +51,7 @@
 \RequirePackage{xcolor}
 \RequirePackage{amsthm,amssymb,amsmath}
 \RequirePackage[
-    format=hang,
+    % format=hang,
     labelsep=period,
     justification=raggedright,
     font=singlespacing,
@@ -68,7 +68,8 @@
 %                                               the gap between the chapter and section when they occur consecutively.
 \RequirePackage{titletoc}%          Use this to manipulate Table of Contents styling
 \RequirePackage{float}
-\RequirePackage[numbers]{natbib}
+% \RequirePackage[numbers]{natbib}
+\usepackage[square,comma,numbers,sort&compress]{natbib}
 
 \providecommand{\ifExists}[3]{%     Check to see if a macro is defined, for the use of detecting 
 %                                   which files have been supplied by the user.
@@ -722,13 +723,13 @@
         
         
         \ifmultipleAppendix%                            If there are multiple appendicies, we should format it this way.
-        
-            \titleformat{\chapter}[hang]
-                {\uppercase}
-                {}
-                {0pt}
-                {\centering\realSingleSpace APPENDIX \thechapter \\[-5pt]}
-                [\raggedright\doublespacing]
+
+            \titleformat{\chapter}[hang]                                   % {<command>}[<shape>]
+                {\uppercase}                                               % {<format>}
+                {}                                                         % {<label>}
+                {0pt}                                                      % {<sec>}
+                {\centering\realSingleSpace APPENDIX \thechapter \\[-5pt]} % {<before-code>}
+                [\raggedright\doublespacing]                               % [<after-code>]
 
             \setcounter{secnumdepth}{-1}%               We don't want the Appendix to have a number, but it should be linked.
             
@@ -746,12 +747,12 @@
             \input{\appendixFile}
 
         \else%                                          If there is only one Appendix, we should do it this way:
-            \titleformat{\chapter}[hang]
-                {\uppercase}
-                {}
-                {0pt}
-                {\centering\realSingleSpace APPENDIX \\[-5pt]}
-                [\raggedright\doublespacing]
+            \titleformat{\chapter}[hang]                       % {<command>}[<shape>]
+                {\uppercase}                                   % {<format>}
+                {}                                             % {<label>}
+                {0pt}                                          % {<sec>}
+                {\centering\realSingleSpace APPENDIX \\[-5pt]} % {<before-code>}
+                [\raggedright\doublespacing]                   % [<after-code>]
     
             \titlecontents{chapter}[0em]
                 {\addvspace{8pt}}
@@ -779,6 +780,13 @@
         {\hyper@linkstart{link}{\Hy@tocdestname}{\titlerule*[5pt]{.}\thecontentspage}\hyper@linkend \\*}
         
     \titlespacing{\chapter}{0pt}{-0.7cm}{0.5\baselineskip}
+
+    \titleformat{\chapter}[hang] % {<command>}[<shape>]
+        {\uppercase}             % {<format>}
+        {}                       % {<label>}
+        {0pt}                    % {<sec>}
+        {\centering}             % {<before-code>}
+        []                       % [<after-code>]
     
     \ifExists{referenceFile}%                               Reference file comes next.
         {%                                                  If we have defined a reference file, import it.
