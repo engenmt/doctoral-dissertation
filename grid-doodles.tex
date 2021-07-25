@@ -1,0 +1,518 @@
+\newcommand{\gridCell}[2][0.25]{
+    % Draw one cell with direction (#2).
+    \begin{tikzpicture}[scale=1, baseline = 1pt]
+        \pgftransformxscale{#1};
+        \pgftransformyscale{#1};
+
+        \draw [semithick, line cap=round] (0,0) rectangle (1,1);
+        \ifthenelse{#2 = 1 \OR #2 = -1}{
+            \ifthenelse{#2 > 0}{
+                \draw [semithick, line cap=round] (0,0) -- (1,1);
+            }{
+                \draw [semithick, line cap=round] (0,1) -- (1,0);
+            };
+        }{};
+    \end{tikzpicture}
+}
+
+\newcommand{\gridCellDot}[3][0.25]{
+    % Draw one cell with direction (#2) with a dot located in quadrant (#3).
+    \begin{tikzpicture}[scale=1, baseline = 1pt]
+        \pgftransformxscale{#1};
+        \pgftransformyscale{#1};
+
+        \draw [semithick, line cap=round] (0,0) rectangle (1,1);
+        \ifthenelse{#2 = 1 \OR #2 = -1}{
+            \ifthenelse{#2 > 0}{
+                \draw [semithick, line cap=round] (0,0) -- (1,1);
+            }{
+                \draw [semithick, line cap=round] (0,1) -- (1,0);
+            };
+        }{};
+
+        \ifthenelse{#3 = 1}{
+            \draw [draw=black, fill=black] (1,1) circle (4pt);
+        }{};
+        \ifthenelse{#3 = 2}{
+            \draw [draw=black, fill=black] (0,1) circle (4pt);
+        }{};
+        \ifthenelse{#3 = 3}{
+            \draw [draw=black, fill=black] (0,0) circle (4pt);
+        }{};
+        \ifthenelse{#3 = 4}{
+            \draw [draw=black, fill=black] (1,0) circle (4pt);
+        }{};
+    \end{tikzpicture}
+}
+
+\newcommand{\gridVertOne}[2][0.25]{
+    % Draw one vertical column of grid cells.
+    % Example: \gridVertOne[0.5]{1,1,1} draws a column at scale 0.5 with three increasing cells.
+    \begin{tikzpicture}[scale=1, baseline = 1pt]
+        \pgftransformxscale{#1};
+        \pgftransformyscale{#1};
+
+        \foreach \dir [count = \i] in {#2} {
+            \draw [semithick, line cap=round] (0,{\i-1}) rectangle (1,{\i});
+            \ifthenelse{\dir = 1 \OR \dir = -1}{
+                \ifthenelse{\dir > 0}{
+                    \draw [semithick, line cap=round] (0,{\i-1}) -- (1,{\i});
+                }{
+                    \draw [semithick, line cap=round] (0,{\i}) -- (1,{\i-1});
+                };
+            }{};
+        }
+    \end{tikzpicture}
+}
+
+\newcommand{\gridVertTwo}[3][0.25]{
+    \begin{tikzpicture}[scale=1, baseline = 1pt]
+
+    \pgftransformxscale{#1};
+    \pgftransformyscale{#1};
+
+     \foreach \dir [count = \i] in {#2} {
+        \draw [semithick, line cap=round] (0,{\i-1}) rectangle (1,{\i});
+        \ifthenelse{\dir = 1 \OR \dir = -1}{
+            \ifthenelse{\dir > 0}{
+                \draw [semithick, line cap=round] (0,{\i-1}) -- (1,{\i});
+            }{
+                \draw [semithick, line cap=round] (0,{\i}) -- (1,{\i-1});
+            };
+        }{};
+    }
+
+    \foreach \dir [count = \i] in {#3} {
+        \draw [semithick, line cap=round] (1,{\i-1}) rectangle (2,{\i});
+        \ifthenelse{\dir = 1 \OR \dir = -1}{
+            \ifthenelse{\dir > 0}{
+                \draw [semithick, line cap=round] (1,{\i-1}) -- (2,{\i});
+            }{
+                \draw [semithick, line cap=round] (1,{\i}) -- (2,{\i-1});
+            };
+        }{};
+    }
+    
+    \end{tikzpicture}
+}
+
+\newcommand{\gridVertThree}[4][0.25]{
+    \begin{tikzpicture}[scale=1, baseline = 1pt]
+
+    \pgftransformxscale{#1};
+    \pgftransformyscale{#1};
+
+     \foreach \dir [count = \i] in {#2} {
+        \draw [semithick, line cap=round] (0,{\i-1}) rectangle (1,{\i});
+        \ifthenelse{\dir = 1 \OR \dir = -1}{
+            \ifthenelse{\dir > 0}{
+                \draw [semithick, line cap=round] (0,{\i-1}) -- (1,{\i});
+            }{
+                \draw [semithick, line cap=round] (0,{\i}) -- (1,{\i-1});
+            };
+        }{};
+    }
+
+    \foreach \dir [count = \i] in {#3} {
+        \draw [semithick, line cap=round] (1,{\i-1}) rectangle (2,{\i});
+        \ifthenelse{\dir = 1 \OR \dir = -1}{
+            \ifthenelse{\dir > 0}{
+                \draw [semithick, line cap=round] (1,{\i-1}) -- (2,{\i});
+            }{
+                \draw [semithick, line cap=round] (1,{\i}) -- (2,{\i-1});
+            };
+        }{};
+    }
+
+    \foreach \dir [count = \i] in {#4} {
+        \draw [semithick, line cap=round] (2,{\i-1}) rectangle (3,{\i});
+        \ifthenelse{\dir = 1 \OR \dir = -1}{
+            \ifthenelse{\dir > 0}{
+                \draw [semithick, line cap=round] (2,{\i-1}) -- (3,{\i});
+            }{
+                \draw [semithick, line cap=round] (2,{\i}) -- (3,{\i-1});
+            };
+        }{};
+    }
+    
+    \end{tikzpicture}
+}
+
+\newcommand{\gridVertFour}[5][0.25]{
+    \begin{tikzpicture}[scale=1, baseline = 1pt]
+
+    \pgftransformxscale{#1};
+    \pgftransformyscale{#1};
+
+     \foreach \dir [count = \i] in {#2} {
+        \draw [semithick, line cap=round] (0,{\i-1}) rectangle (1,{\i});
+        \ifthenelse{\dir = 1 \OR \dir = -1}{
+            \ifthenelse{\dir > 0}{
+                \draw [semithick, line cap=round] (0,{\i-1}) -- (1,{\i});
+            }{
+                \draw [semithick, line cap=round] (0,{\i}) -- (1,{\i-1});
+            };
+        }{};
+    }
+
+    \foreach \dir [count = \i] in {#3} {
+        \draw [semithick, line cap=round] (1,{\i-1}) rectangle (2,{\i});
+        \ifthenelse{\dir = 1 \OR \dir = -1}{
+            \ifthenelse{\dir > 0}{
+                \draw [semithick, line cap=round] (1,{\i-1}) -- (2,{\i});
+            }{
+                \draw [semithick, line cap=round] (1,{\i}) -- (2,{\i-1});
+            };
+        }{};
+    }
+
+    \foreach \dir [count = \i] in {#4} {
+        \draw [semithick, line cap=round] (2,{\i-1}) rectangle (3,{\i});
+        \ifthenelse{\dir = 1 \OR \dir = -1}{
+            \ifthenelse{\dir > 0}{
+                \draw [semithick, line cap=round] (2,{\i-1}) -- (3,{\i});
+            }{
+                \draw [semithick, line cap=round] (2,{\i}) -- (3,{\i-1});
+            };
+        }{};
+    }
+
+    \foreach \dir [count = \i] in {#5} {
+        \draw [semithick, line cap=round] (3,{\i-1}) rectangle (4,{\i});
+        \ifthenelse{\dir = 1 \OR \dir = -1}{
+            \ifthenelse{\dir > 0}{
+                \draw [semithick, line cap=round] (3,{\i-1}) -- (4,{\i  });
+            }{
+                \draw [semithick, line cap=round] (3,{\i  }) -- (4,{\i-1});
+            };
+        }{};
+    }
+    
+    \end{tikzpicture}
+}
+
+\newcommand{\gridHorizOne}[2][0.25]{
+    \begin{tikzpicture}[scale=1, baseline = 1pt]
+
+    \pgftransformxscale{#1};
+    \pgftransformyscale{#1};
+
+     \foreach \dir [count = \i] in {#2} {
+        \draw [semithick, line cap=round] ({\i-1},0) rectangle ({\i},1);
+        \ifthenelse{\dir = 1 \OR \dir = -1}{
+            \ifthenelse{\dir > 0}{
+                \draw [semithick, line cap=round] ({\i-1},0) -- ({\i},1);
+            }{
+                \draw [semithick, line cap=round] ({\i},0) -- ({\i-1},1);
+            };
+        }{};
+    }
+    
+    \end{tikzpicture}
+}
+
+\newcommand{\gridHorizTwo}[3][0.25]{
+    \begin{tikzpicture}[scale=1, baseline = 1pt]
+
+    \pgftransformxscale{#1};
+    \pgftransformyscale{#1};
+
+     \foreach \dir [count = \i] in {#2} {
+        \draw [semithick, line cap=round] ({\i-1},0) rectangle ({\i},1);
+        \ifthenelse{\dir = 1 \OR \dir = -1}{
+            \ifthenelse{\dir > 0}{
+                \draw [semithick, line cap=round] ({\i-1},0) -- ({\i},1);
+            }{
+                \draw [semithick, line cap=round] ({\i},0) -- ({\i-1},1);
+            };
+        }{};
+    }
+
+    \foreach \dir [count = \i] in {#3} {
+        \draw [semithick, line cap=round] ({\i-1},1) rectangle ({\i},2);
+        \ifthenelse{\dir = 1 \OR \dir = -1}{
+            \ifthenelse{\dir > 0}{
+                \draw [semithick, line cap=round] ({\i-1},1) -- ({\i},2);
+            }{
+                \draw [semithick, line cap=round] ({\i},1) -- ({\i-1},2);
+            };
+        }{};
+    }
+    
+    \end{tikzpicture}
+}
+
+\newcommand{\gridHorizThree}[4][0.25]{
+    \begin{tikzpicture}[scale=1, baseline = 1pt]
+
+        \pgftransformxscale{#1};
+        \pgftransformyscale{#1};
+
+         \foreach \dir [count = \i] in {#2} {
+            \draw [semithick, line cap=round] ({\i-1},0) rectangle ({\i},1);
+            \ifthenelse{\dir = 1 \OR \dir = -1}{
+                \ifthenelse{\dir > 0}{
+                    \draw [semithick, line cap=round] ({\i-1},0) -- ({\i},1);
+                }{
+                    \draw [semithick, line cap=round] ({\i},0) -- ({\i-1},1);
+                };
+            }{};
+        }
+
+        \foreach \dir [count = \i] in {#3} {
+            \draw [semithick, line cap=round] ({\i-1},1) rectangle ({\i},2);
+            \ifthenelse{\dir = 1 \OR \dir = -1}{
+                \ifthenelse{\dir > 0}{
+                    \draw [semithick, line cap=round] ({\i-1},1) -- ({\i},2);
+                }{
+                    \draw [semithick, line cap=round] ({\i},1) -- ({\i-1},2);
+                };
+            }{};
+        }
+
+        \foreach \dir [count = \i] in {#4} {
+            \draw [semithick, line cap=round] ({\i-1},2) rectangle ({\i},3);
+            \ifthenelse{\dir = 1 \OR \dir = -1}{
+                \ifthenelse{\dir > 0}{
+                    \draw [semithick, line cap=round] ({\i-1},2) -- ({\i},3);
+                }{
+                    \draw [semithick, line cap=round] ({\i},2) -- ({\i-1},3);
+                };
+            }{};
+        }
+    
+    \end{tikzpicture}
+}
+
+\newcommand{\gridCellDisplay}[2][1.0]{
+    % Draw one cell with direction (#2).
+    \begin{tikzpicture}[scale=1, baseline = (current bounding box.center)]
+        \pgftransformxscale{#1};
+        \pgftransformyscale{#1};
+
+        \draw [thick, line cap=round] (0,0) rectangle (1,1);
+        \ifthenelse{#2 = 1 \OR #2 = -1}{
+            \ifthenelse{#2 > 0}{
+                \draw [thick, line cap=round] (0,0) -- (1,1);
+            }{
+                \draw [thick, line cap=round] (0,1) -- (1,0);
+            };
+        }{};
+    \end{tikzpicture}
+}
+
+\newcommand{\gridCellDotDisplay}[3][1.0]{
+    % Draw one cell with direction (#2) with a dot located in quadrant (#3).
+    \begin{tikzpicture}[scale=1, baseline = (current bounding box.center)]
+        \pgftransformxscale{#1};
+        \pgftransformyscale{#1};
+
+        \draw [thick, line cap=round] (0,0) rectangle (1,1);
+        \ifthenelse{#2 = 1 \OR #2 = -1}{
+            \ifthenelse{#2 > 0}{
+                \draw [thick, line cap=round] (0,0) -- (1,1);
+            }{
+                \draw [thick, line cap=round] (0,1) -- (1,0);
+            };
+        }{};
+
+        \ifthenelse{#3 = 1}{
+            \draw [draw=black, fill=black] (1,1) circle (2pt);
+        }{};
+        \ifthenelse{#3 = 2}{
+            \draw [draw=black, fill=black] (0,1) circle (2pt);
+        }{};
+        \ifthenelse{#3 = 3}{
+            \draw [draw=black, fill=black] (0,0) circle (2pt);
+        }{};
+        \ifthenelse{#3 = 4}{
+            \draw [draw=black, fill=black] (1,0) circle (2pt);
+        }{};
+    \end{tikzpicture}
+}
+
+\newcommand{\gridVertOneDisplay}[2][1.0]{
+    % Draw one vertical column of grid cells.
+    % Example: \gridVertOne[0.5]{1,1,1} draws a column at scale 0.5 with three increasing cells.
+    \begin{tikzpicture}[scale=1, baseline = (current bounding box.center)]
+        \pgftransformxscale{#1};
+        \pgftransformyscale{#1};
+
+        \foreach \dir [count = \i] in {#2} {
+            \draw [thick, line cap=round] (0,{\i-1}) rectangle (1,{\i});
+            \ifthenelse{\dir = 1 \OR \dir = -1}{
+                \ifthenelse{\dir > 0}{
+                    \draw [thick, line cap=round] (0,{\i-1}) -- (1,{\i});
+                }{
+                    \draw [thick, line cap=round] (0,{\i}) -- (1,{\i-1});
+                };
+            }{};
+        }
+    \end{tikzpicture}
+}
+
+\newcommand{\gridVertTwoDisplay}[3][1.0]{
+    \begin{tikzpicture}[scale=1, baseline = (current bounding box.center)]
+
+    \pgftransformxscale{#1};
+    \pgftransformyscale{#1};
+
+     \foreach \dir [count = \i] in {#2} {
+        \draw [thick, line cap=round] (0,{\i-1}) rectangle (1,{\i});
+        \ifthenelse{\dir = 1 \OR \dir = -1}{
+            \ifthenelse{\dir > 0}{
+                \draw [thick, line cap=round] (0,{\i-1}) -- (1,{\i});
+            }{
+                \draw [thick, line cap=round] (0,{\i}) -- (1,{\i-1});
+            };
+        }{};
+    }
+
+    \foreach \dir [count = \i] in {#3} {
+        \draw [thick, line cap=round] (1,{\i-1}) rectangle (2,{\i});
+        \ifthenelse{\dir = 1 \OR \dir = -1}{
+            \ifthenelse{\dir > 0}{
+                \draw [thick, line cap=round] (1,{\i-1}) -- (2,{\i});
+            }{
+                \draw [thick, line cap=round] (1,{\i}) -- (2,{\i-1});
+            };
+        }{};
+    }
+    
+    \end{tikzpicture}
+}
+
+\newcommand{\gridVertThreeDisplay}[4][1.0]{
+    \begin{tikzpicture}[scale=1, baseline = (current bounding box.center)]
+
+    \pgftransformxscale{#1};
+    \pgftransformyscale{#1};
+
+     \foreach \dir [count = \i] in {#2} {
+        \draw [thick, line cap=round] (0,{\i-1}) rectangle (1,{\i});
+        \ifthenelse{\dir = 1 \OR \dir = -1}{
+            \ifthenelse{\dir > 0}{
+                \draw [thick, line cap=round] (0,{\i-1}) -- (1,{\i});
+            }{
+                \draw [thick, line cap=round] (0,{\i}) -- (1,{\i-1});
+            };
+        }{};
+    }
+
+    \foreach \dir [count = \i] in {#3} {
+        \draw [thick, line cap=round] (1,{\i-1}) rectangle (2,{\i});
+        \ifthenelse{\dir = 1 \OR \dir = -1}{
+            \ifthenelse{\dir > 0}{
+                \draw [thick, line cap=round] (1,{\i-1}) -- (2,{\i});
+            }{
+                \draw [thick, line cap=round] (1,{\i}) -- (2,{\i-1});
+            };
+        }{};
+    }
+
+    \foreach \dir [count = \i] in {#4} {
+        \draw [thick, line cap=round] (2,{\i-1}) rectangle (3,{\i});
+        \ifthenelse{\dir = 1 \OR \dir = -1}{
+            \ifthenelse{\dir > 0}{
+                \draw [thick, line cap=round] (2,{\i-1}) -- (3,{\i});
+            }{
+                \draw [thick, line cap=round] (2,{\i}) -- (3,{\i-1});
+            };
+        }{};
+    }
+    
+    \end{tikzpicture}
+}
+
+\newcommand{\gridHorizOneDisplay}[2][1.0]{
+    \begin{tikzpicture}[scale=1, baseline = (current bounding box.center)]
+
+    \pgftransformxscale{#1};
+    \pgftransformyscale{#1};
+
+     \foreach \dir [count = \i] in {#2} {
+        \draw [thick, line cap=round] ({\i-1},0) rectangle ({\i},1);
+        \ifthenelse{\dir = 1 \OR \dir = -1}{
+            \ifthenelse{\dir > 0}{
+                \draw [thick, line cap=round] ({\i-1},0) -- ({\i},1);
+            }{
+                \draw [thick, line cap=round] ({\i},0) -- ({\i-1},1);
+            };
+        }{};
+    }
+    
+    \end{tikzpicture}
+}
+
+\newcommand{\gridHorizTwoDisplay}[3][1.0]{
+    \begin{tikzpicture}[scale=1, baseline = (current bounding box.center)]
+
+    \pgftransformxscale{#1};
+    \pgftransformyscale{#1};
+
+     \foreach \dir [count = \i] in {#2} {
+        \draw [thick, line cap=round] ({\i-1},0) rectangle ({\i},1);
+        \ifthenelse{\dir = 1 \OR \dir = -1}{
+            \ifthenelse{\dir > 0}{
+                \draw [thick, line cap=round] ({\i-1},0) -- ({\i},1);
+            }{
+                \draw [thick, line cap=round] ({\i},0) -- ({\i-1},1);
+            };
+        }{};
+    }
+
+    \foreach \dir [count = \i] in {#3} {
+        \draw [thick, line cap=round] ({\i-1},1) rectangle ({\i},2);
+        \ifthenelse{\dir = 1 \OR \dir = -1}{
+            \ifthenelse{\dir > 0}{
+                \draw [thick, line cap=round] ({\i-1},1) -- ({\i},2);
+            }{
+                \draw [thick, line cap=round] ({\i},1) -- ({\i-1},2);
+            };
+        }{};
+    }
+    
+    \end{tikzpicture}
+}
+
+\newcommand{\gridHorizThreeDisplay}[4][1.0]{
+    \begin{tikzpicture}[scale=1, baseline = (current bounding box.center)]
+
+    \pgftransformxscale{#1};
+    \pgftransformyscale{#1};
+
+     \foreach \dir [count = \i] in {#2} {
+        \draw [thick, line cap=round] ({\i-1},0) rectangle ({\i},1);
+        \ifthenelse{\dir = 1 \OR \dir = -1}{
+            \ifthenelse{\dir > 0}{
+                \draw [thick, line cap=round] ({\i-1},0) -- ({\i},1);
+            }{
+                \draw [thick, line cap=round] ({\i},0) -- ({\i-1},1);
+            };
+        }{};
+    }
+
+    \foreach \dir [count = \i] in {#3} {
+        \draw [thick, line cap=round] ({\i-1},1) rectangle ({\i},2);
+        \ifthenelse{\dir = 1 \OR \dir = -1}{
+            \ifthenelse{\dir > 0}{
+                \draw [thick, line cap=round] ({\i-1},1) -- ({\i},2);
+            }{
+                \draw [thick, line cap=round] ({\i},1) -- ({\i-1},2);
+            };
+        }{};
+    }
+
+    \foreach \dir [count = \i] in {#4} {
+        \draw [thick, line cap=round] ({\i-1},2) rectangle ({\i},3);
+        \ifthenelse{\dir = 1 \OR \dir = -1}{
+            \ifthenelse{\dir > 0}{
+                \draw [thick, line cap=round] ({\i-1},2) -- ({\i},3s);
+            }{
+                \draw [thick, line cap=round] ({\i},2) -- ({\i-1},3s);
+            };
+        }{};
+    }
+    
+    \end{tikzpicture}
+}

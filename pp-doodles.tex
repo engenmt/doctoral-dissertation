@@ -1,0 +1,766 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Vince's Tikz macros                                             %
+% Version of 19 June 2016                                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{pgfmath}
+
+%
+%
+%
+%
+
+% Points of absolute size (to be used when drawing matchings and permutations).
+% Call \absdot[label]{(2,3)} for label, otherwise omit optional argument.
+
+\newcommand\mybullet{\raisebox{-5pt}{\normalsize \ensuremath{\bullet}}}
+\newcommand\mycirc{\raisebox{-5pt}{\normalsize \ensuremath{\circ}}}
+\newcommand\myscaledbullet[1]{\raisebox{-5pt}{\scalebox{#1}{\normalsize \ensuremath{\bullet}}}}
+
+\makeatletter
+\def\absdot{\@ifnextchar[{\@absdotlabel}{\@absdotnolabel}}
+    \def\@absdotlabel[#1]#2{%
+        \node at #2 {\normalsize \mybullet};
+        \node at #2 [below=2pt] {\ensuremath{#1}};
+    }
+    \def\@absdotnolabel#1{%
+        \node at #1 {\normalsize \mybullet};
+    }
+\def\absdothollow{\@ifnextchar[{\@absdothollowlabel}{\@absdothollownolabel}}
+    % Make a dot of fixed absolute size.
+    % Note that \absdothollow first overwrites what it is going on top of.
+    \def\@absdothollowlabel[#1]#2{%
+        \node at #2 {\normalsize \textcolor{white}{\mybullet}};
+        \node at #2 {\normalsize \mycirc};
+        \node at #2 [below=2pt] {\ensuremath{#1}};
+    }
+    \def\@absdothollownolabel#1{%
+        \node at #1 {\normalsize \textcolor{white}{\mybullet}};
+        \node at #1 {\normalsize \mycirc};
+    }
+\makeatother
+
+%
+%
+%
+%
+
+% Plotting permutations. Recommended scale: 0.25 (and possibly up to 0.5).
+
+\newcommand{\plotperm}[1]{
+    \foreach \j [count=\i] in {#1} {
+        \absdot{(\i,\j)};
+    };
+}
+
+\newcommand{\plotpermprecise}[2]{
+    \foreach \j [count=\i] in {#1} {
+        \draw[black,fill=black] (\i,\j) circle (#2);
+    };
+}
+
+\newcommand{\plotpermscaled}[2]{
+    \foreach \j [count=\i] in {#1} {
+        \node at (\i,\j) {\scalebox{#2}{\normalsize \ensuremath{\bullet}}};
+    };
+}
+
+\newcommand{\plotpermhollow}[1]{
+    \foreach \j [count=\i] in {#1} {
+        \absdothollow{(\i,\j)};
+    };
+}
+
+\newcommand{\plotpartialperm}[1]{
+    \foreach \i/\j in {#1} {
+        \absdot{(\i,\j)};
+    };
+}
+
+\newcommand\myencircle{\raisebox{-8.75pt}{\LARGE \ensuremath{\circ}}}
+\newcommand{\plotpartialpermencircle}[1]{
+    \foreach \i/\j in {#1} {
+        \node at (\i,\j) {\myencircle};
+    };
+}
+
+\newcommand{\plotpartialpermhollow}[1]{
+    \foreach \i/\j in {#1} {
+        \absdothollow{(\i,\j)};
+    };
+}
+
+\newcommand{\plotpermbox}[4]{
+    \draw [darkgray, thick, line cap=round]
+        ({#1-0.5}, {#2-0.5}) rectangle ({#3+0.5}, {#4+0.5});
+}
+
+\newcommand{\plotpermborder}[1]{
+    \plotperm{#1};
+    \pgfmathsetmacro\n{dim(#1)};
+    % Now \n stores the number of entries of the permutation. Draw the border.
+    \plotpermbox{1}{1}{\n}{\n};
+}
+
+\newcommand{\plotpermgraphedges}[1]{
+    \foreach \j [count=\i] in {#1} {
+        \foreach \b [count=\a] in {#1} {
+            % Draw edge from (a,b) to (i,j) if they form an inversion.
+            \ifthenelse{\a<\i \AND \b>\j}{\draw (\a,\b)--(\i,\j);}{}
+        };
+    };
+}
+
+\newcommand{\plotpermgraph}[1]{
+    \foreach \j [count=\i] in {#1} {
+        \foreach \b [count=\a] in {#1} {
+            % Draw edge from (a,b) to (i,j) if they form an inversion.
+            \ifthenelse{\a<\i \AND \b>\j}{\draw (\a,\b)--(\i,\j);}{}
+        };
+    };
+    \plotperm{#1};
+}
+
+\newcommand{\plotpermgraphborder}[1]{
+    \foreach \j [count=\i] in {#1} {
+        \foreach \b [count=\a] in {#1} {
+            % Draw edge from (a,b) to (i,j) if they form an inversion.
+            \ifthenelse{\a<\i \AND \b>\j}{\draw (\a,\b)--(\i,\j);}{}
+        };
+    };
+    \plotpermborder{#1};
+}
+
+\newcommand{\plotpermgrid}[1]{
+    \pgfmathsetmacro\n{dim(#1)};
+    % Now \n stores the number of entries of the permutation. Draw the border.
+    \foreach \i in {0,1,2,...,\n}{
+        \draw[color=darkgray] ({\i+0.5}, 0.5)--({\i+0.5}, {\n+0.5});
+        \draw[color=darkgray] (0.5, {\i+0.5})--({\n+0.5}, {\i+0.5});
+    }
+    \plotperm{#1};
+}
+
+\newcommand{\plotpermdyckgrid}[1]{
+    \pgfmathsetmacro\n{dim(#1)};
+    % Now \n stores the number of entries of the permutation. Draw the border.
+    \foreach \i in {0,1,2,...,\n}{
+        \draw[color=lightgray] ({\i+0.5}, 0.5)--({\i+0.5}, {\n+0.5});
+        \draw[color=lightgray] (0.5, {\i+0.5})--({\n+0.5}, {\i+0.5});
+    }
+    \draw[ultra thick, line cap=round, color=darkgray] (0.5, 0.5)--({\n+0.5}, {\n+0.5});
+    \plotperm{#1};
+}
+
+\newcommand{\plotpermdyckpath}[1]{
+    % Pass a list of coordinates. Everything is shifted, so the lower-left of the grid is the origin.
+    \draw[ultra thick, line cap=round] (0.5,0.5)
+    \foreach \step in {#1} {
+        \ifnum\step=1
+            -- ++(0,1)
+        \else
+            -- ++(1,0)
+        \fi
+    };
+}
+
+%
+%
+%
+%
+
+% Drawing Dyck paths. Pass the command a list of 1s and -1s.
+% Note that this path will be a factor of sqrt(2) larger than \plotpermdyckpath
+% Adapted from http://tex.stackexchange.com/questions/63540/how-to-draw-a-catalan-number-diagram-on-tikz
+
+\newcommand{\plotdyckpath}[1]{
+    \draw[ultra thick, line cap=round] (0.5,0)
+    \foreach \step in {#1} {
+        \ifnum\step=1
+            -- ++(1,1)
+        \else
+            -- ++(1,-1)
+        \fi
+    };
+}
+
+%
+%
+%
+%
+
+% Drawing (large) matchings. Recommended scale is around 0.5.
+
+\newcommand{\arcskinnyplain}[2]{
+    \draw[thick] (#1,0) arc (180:0:{(#2-#1)/2});
+}
+
+\newcommand{\arc}[2]{
+    \draw[thick] (#1,0) arc (180:0:{(#2-#1)/2});
+    \absdot{(#1,0)};
+    \absdot{(#2,0)};
+}
+
+\newcommand{\arcgray}[2]{
+    \draw[thick, lightgray] (#1,0) arc (180:0:{(#2-#1)/2});
+    \absdot{(#1,0)};
+    \absdot{(#2,0)};
+}
+
+\newcommand{\arcdotted}[2]{
+    \draw[thick, dotted, line cap=round] (#1,0) arc (180:0:{(#2-#1)/2});
+    \absdot{(#1,0)};
+    \absdot{(#2,0)};
+}
+
+\newcommand{\arclabel}[4]{
+    \draw[thick] (#1,0) arc (180:0:{(#2-#1)/2});
+    % The \mathstrut below gets the vertical alignment correct if you
+    %   are using labels like a, b, c, d, e, ...
+    \absdot[\ensuremath{\mathstrut #3}]{(#1,0)};
+    \absdot[\ensuremath{\mathstrut #4}]{(#2,0)};
+}
+
+\newcommand{\arclabelgray}[4]{
+    \draw[thick, darkgray] (#1,0) arc (180:0:{(#2-#1)/2});
+    \absdot[\ensuremath{\mathstrut #3}]{(#1,0)};
+    \absdot[\ensuremath{\mathstrut #4}]{(#2,0)};
+}
+
+\newcommand{\arclabeldotted}[4]{
+    \draw[thick, dotted, line cap=round] (#1,0) arc (180:0:{(#2-#1)/2});
+    \absdot[\ensuremath{\mathstrut #3}]{(#1,0)};
+    \absdot[\ensuremath{\mathstrut #4}]{(#2,0)};
+}
+
+\newcommand{\arclabelgroup}[2]{
+    \draw ({#1-0.25}, -1) rectangle ({#2+0.25}, -0.25);
+}
+
+\newcommand{\arclabelgroupgray}[2]{
+    \draw[lightgray, fill=lightgray] ({#1-0.25}, -1) rectangle ({#2+0.25}, -0.3);
+}
+
+%
+%
+%
+%
+
+\newcommand{\matching}[1]{
+    \foreach \i/\j in {#1} {
+        \arc{\i}{\j};
+    };
+}
+
+\newcommand{\matchingdotted}[1]{
+    \foreach \i/\j in {#1} {
+        \arcdotted{\i}{\j};
+    };
+}
+
+\newcommand{\matchinglabels}[1]{
+    \foreach \i/\j in {#1} {
+        \arclabel{\i}{\j}{\i}{\j};
+    };
+}
+
+\newcommand{\matchinglabelsdotted}[1]{
+    \foreach \i/\j in {#1} {
+        \arclabeldotted{\i}{\j}{\i}{\j};
+    };
+}
+
+\newcommand{\matchinglabelsgray}[1]{
+    \foreach \i/\j in {#1} {
+        \arclabelgray{\i}{\j}{\i}{\j};
+    };
+}
+
+\newcommand{\matchingperm}[1]{
+    \pgfmathsetmacro\n{dim(#1)};
+    % Now \n stores the number of entries of the permutation.
+    \foreach \j [count=\i] in {#1} {
+        \arclabel{\i}{{2*\n+1-\j}}{\i}{\j};
+    };
+}
+
+\newcommand{\matchingshadeedge}[1]{
+    % Just like drawing an edge, e.g., 3/6
+    \foreach \i/\j in {#1} {
+        \draw[color=lightgray, fill=lightgray] ({\i-0.25},0)
+            arc (180:0:{(\j-\i)/2 + 0.25})
+            arc (0:-180:0.25)
+            arc (0:180:{(\j-\i)/2 - 0.25})
+            arc (0:-180:0.25)--cycle;   
+    };
+}
+
+\newcommand{\matchingshadeendpoints}[1]{
+    % Multiple groups can be input, like 1/4, 5/8
+    \foreach \i/\j in {#1} {
+        \draw[color=lightgray, fill=lightgray] (\i,-0.25)
+            arc (270:90:0.25)
+            --(\j,0.25)
+            arc (90:-90:0.25)
+            --(\i,-0.25);
+    };
+}
+
+\newcommand{\matchingshadegroup}[4]{
+    % Give two groups, like {1}{4}{5}{8}. Will shade whole region of edges from vertices 1-4 to vertices 5-8.
+    \draw[color=lightgray, fill=lightgray] ({#1-0.25},0)
+        arc (180:0:{(#4-#1)/2 + 0.25}) % outer arc
+        arc (0:-90:0.25)
+        --(#3,-0.25) % right-hand bottom
+        arc (270:180:0.25)
+        arc (0:180:{(#3-#2)/2 - 0.25}) % inner arc
+        arc (0:-90:0.25)
+        --(#1,-0.25) % left-hand bottom
+        arc (270:180:0.25)--cycle;
+}
+
+\newcommand{\matchinggroupdark}[4]{
+    % Give two groups, like {1}{4}{5}{8}. Will shade whole region of edges from vertices 1-4 to vertices 5-8.
+    \draw ({#1-0.25},0)
+        arc (180:0:{(#4-#1)/2 + 0.25}) % outer arc
+        arc (0:-90:0.25)
+        --(#3,-0.25) % right-hand bottom
+        arc (270:180:0.25)
+        arc (0:180:{(#3-#2)/2 - 0.25}) % inner arc
+        arc (0:-90:0.25)
+        --(#1,-0.25) % left-hand bottom
+        arc (270:180:0.25)--cycle;
+}
+
+\newcommand{\matchingshadegroupdark}[4]{
+    % Give two groups, like {1}{4}{5}{8}. Will shade whole region of edges from vertices 1-4 to vertices 5-8.
+    \draw[color=black, fill=lightgray] ({#1-0.25},0)
+        arc (180:0:{(#4-#1)/2 + 0.25}) % outer arc
+        arc (0:-90:0.25)
+        --(#3,-0.25) % right-hand bottom
+        arc (270:180:0.25)
+        arc (0:180:{(#3-#2)/2 - 0.25}) % inner arc
+        arc (0:-90:0.25)
+        --(#1,-0.25) % left-hand bottom
+        arc (270:180:0.25)--cycle;
+}
+
+%
+%
+%
+%
+
+% Drawing (small) matchings (all have width = 0.1*(verts-1) and height=0.15
+
+\newcommand{\matchnest}{
+    \begin{tikzpicture}[scale=.1, yscale=1.5, anchor=base]
+        \arcskinnyplain{1}{4};
+        \arcskinnyplain{2}{3};
+    \end{tikzpicture}
+}
+
+\newcommand{\matchcross}{
+    \begin{tikzpicture}[scale=.1, yscale=2.25, anchor=base]
+        \arcskinnyplain{1}{3};
+        \arcskinnyplain{2}{4};
+    \end{tikzpicture}
+}
+
+\newcommand{\matchind}{
+    \begin{tikzpicture}[scale=.1, yscale=4.5, anchor=base]
+        \arcskinnyplain{1}{2};
+        \arcskinnyplain{3}{4};
+    \end{tikzpicture}
+}
+
+\newcommand{\matchsmall}[1]{
+    \begin{tikzpicture}[scale=.1, anchor=base]
+        % We need to read through so that we can rescale y so that the height is precisely 0.15
+        \def\h{0};
+        \def\maxh{0};
+        \foreach \i/\j in {#1} {
+            \pgfmathparse{\j-\i};
+            \let\h\pgfmathresult;
+            \pgfmathifthenelse{\h>\maxh}{\h}{\maxh};
+            \global\let\maxh\pgfmathresult;
+        };
+        \pgftransformyscale{{4.5/\maxh}};
+        \foreach \i/\j in {#1} {
+            \arcskinnyplain{\i}{\j};
+        };
+    \end{tikzpicture}
+}
+
+\newcommand{\matchpermsmall}[1]{
+    \begin{tikzpicture}[scale=.1, anchor=base]
+        \pgfmathsetmacro\n{dim(#1)};
+        % Now \n stores the length of the permutation.
+        % We need to read through again so that we can rescale y so that the height is precisely 0.15
+        \def\h{0};
+        \def\maxh{0};
+        \foreach \j [count=\i] in {#1} {
+            \pgfmathparse{2*\n+1-\j-\i};
+            \let\h\pgfmathresult;
+            \pgfmathifthenelse{\h>\maxh}{\h}{\maxh};
+            \global\let\maxh\pgfmathresult;
+        };
+        \pgftransformyscale{{4.5/\maxh}};
+        \foreach \j [count=\i] in {#1} {
+            \arcskinnyplain{\i}{{2*\n+1-\j}};
+        };
+    \end{tikzpicture}
+}
+
+%
+%
+%
+%
+
+% Plotting partitions.
+\newcommand{\plotpartition}[1]{
+    \foreach \i [count=\j] in {#1} {
+        \draw [thick, line cap=round] (0,-\j)--(\i,-\j)--(\i,-\j-1)--(0,-\j-1)--cycle;
+        \foreach \k in {1,2,...,\i}{
+            \draw [thick, line cap=round] ({\k-1},-\j)--({\k-1},{-\j-1});
+        };
+    };
+}
+\newcommand{\plotpartitiongray}[1]{
+    \foreach \i [count=\j] in {#1} {
+        \draw [lightgray, thick, line cap=round] (0,-\j)--(\i,-\j)--(\i,-\j-1)--(0,-\j-1)--cycle;
+        \foreach \k in {1,2,...,\i}{
+            \draw [lightgray, thick, line cap=round] ({\k-1},-\j)--({\k-1},{-\j-1});
+        };
+    };
+}
+
+% Example:
+%       \begin{center}
+%           \begin{tikzpicture}[scale=0.25]
+%               \plotpartitiongray{5,3,2,1,6,1,1};
+%               \plotpartition{4,1,1,1,1};
+%           \end{tikzpicture}
+%       \end{center}
+
+%
+%
+%
+%
+
+% Plotting compositions (skyline diagrams).
+\newcommand{\plotskyline}[1]{
+    \foreach \j [count=\i] in {#1} {
+        \draw [thick, line cap=round] (\i-1,0)--(\i-1,\j)--(\i,\j)--(\i,0)--cycle;
+        \foreach \k in {1,2,...,\j}{
+            \draw [thick, line cap=round] (\i-1,\k-1)--(\i,\k-1);
+        };
+    };
+}
+\newcommand{\plotskylinegray}[1]{
+    \foreach \j [count=\i] in {#1} {
+        \draw [lightgray, thick, line cap=round] (\i-1,0)--(\i-1,\j)--(\i,\j)--(\i,0)--cycle;
+        \foreach \k in {1,2,...,\j}{
+            \draw [lightgray, thick, line cap=round] (\i-1,\k-1)--(\i,\k-1);
+        };
+    };
+}
+\newcommand{\plotskylineshaded}[1]{
+    \foreach \j [count=\i] in {#1} {
+        \draw [lightgray, fill=lightgray, thick, line cap=round] (\i-1,0)--(\i-1,\j)--(\i,\j)--(\i,0)--cycle;
+        \foreach \k in {1,2,...,\j}{
+            \draw [lightgray, fill=lightgray, thick, line cap=round] (\i-1,\k-1)--(\i,\k-1);
+        };
+    };
+}
+
+% Example:
+%       \begin{center}
+%           \begin{tikzpicture}[scale=0.25]
+%               \plotskylinegray{5,3,2,4,6,1,2};
+%               \plotskyline{4,1,1,1,5,1,2};
+%           \end{tikzpicture}
+%       \end{center}
+
+%
+%
+%
+%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Code for inline 1x2 (vert) and 2x1 (horiz) grids. June 2017.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\onegrid}[1]{
+\begin{tikzpicture}[scale=1, baseline = 1pt]
+    \pgftransformxscale{0.25};
+    \pgftransformyscale{0.25};
+    \draw [semithick, line cap=round] (0,0) rectangle (1,1);
+    \ifthenelse{#1>0}{
+        \draw [semithick, line cap=round] (0,0)--(1,1);
+    }{
+        \draw [semithick, line cap=round] (0,1)--(1,0);
+    };
+\end{tikzpicture}
+}
+
+\newcommand{\onegriddotNW}{
+\begin{tikzpicture}[scale=1, baseline = 1pt]
+    \pgftransformxscale{0.25};
+    \pgftransformyscale{0.25};
+    \draw [draw=black, fill=black] (0,1) circle (4pt);
+    \draw [semithick, line cap=round] (0,0) rectangle (1,1);    
+    \draw [semithick, line cap=round] (0,0)--(1,1);
+\end{tikzpicture}
+}
+
+\newcommand{\onegriddotSE}{
+\begin{tikzpicture}[scale=1, baseline = 1pt]
+    \pgftransformxscale{0.25};
+    \pgftransformyscale{0.25};
+    \draw [draw=black, fill=black] (1,0) circle (4pt);
+    \draw [semithick, line cap=round] (0,0) rectangle (1,1);    
+    \draw [semithick, line cap=round] (0,0)--(1,1);
+\end{tikzpicture}
+}
+
+\newcommand{\gridsmallhoriz}[1]{
+% Parameters should be +1 or -1, such as \gridsmallhoriz{1,-1,-1}.
+    \begin{tikzpicture}[scale=1, baseline = 1pt]
+        \def\gridheight{1};
+        \def\gridwidth{1}
+        % \foreach \dir [count=\gridwidth] in {#1} {
+        %     % We read through first to determine how wide the grid is.
+        % };
+        \pgftransformxscale{{0.25/\gridwidth}};
+        \pgftransformyscale{{0.25/\gridheight}};
+        \foreach \dir [count=\i] in {#1} {
+            % Now we have to draw the lines. We start at (0,0) or (0,1).
+            \ifthenelse{\dir>0}{
+                \draw [semithick, line cap=round] ({\i-1}, 0)--(\i, 1);
+            }{
+                \draw [semithick, line cap=round] ({\i-1}, 1)--(\i, 0);
+            };
+            \draw [semithick, line cap = round] ({\i-1}, 0) rectangle ({\i},1);
+        };
+    \end{tikzpicture}
+}
+
+\newcommand{\gridhoriz}[1]{
+ % Parameters should be +1 or -1, such as \gridsmallhoriz{1,-1,-1}.
+\begin{tikzpicture}[scale=1, anchor=base]
+ \pgftransformxscale{0.225};
+\pgftransformyscale{0.225};
+   \foreach \dir [count=\i] in {#1} {
+     % Now we have to draw the lines. We start at (0,0) or (0,1).
+        \ifthenelse{\dir>0}{
+            \draw [semithick, line cap=round] ({\i-1}, 0)--(\i, 1);
+        }{
+            \draw [semithick, line cap=round] ({\i-1}, 1)--(\i, 0);
+        };
+    \draw [semithick, line cap = round] ({\i-1}, 0) rectangle ({\i},1);
+   };
+ \end{tikzpicture}
+}
+
+\newcommand{\gridhorizframe}[1]{
+ % Parameters should be +1 or -1, such as \gridsmallhoriz{1,-1,-1}.
+\begin{tikzpicture}[scale=1, anchor=base]
+ \pgftransformxscale{0.225};
+\pgftransformyscale{0.225};
+   \foreach \dir [count=\i] in {#1} {
+     % Now we have to draw the lines. We start at (0,0) or (0,1).
+     \ifthenelse{\dir>0}{
+       \draw [semithick, line cap=round] ({\i-1}, 0)--(\i, 1);
+     }{
+       \draw [semithick, line cap=round] ({\i-1}, 1)--(\i, 0);
+     };
+     % Draw the frame.
+     \draw [semithick, line cap = round] ({\i-1}, 0) rectangle ({\i},1);
+   };
+ \end{tikzpicture}
+}
+
+\newcommand{\gridsmallvert}[1]{
+ % Parameters should be +1 or -1, such as \gridsmallhoriz{1,-1,-1}.
+ % These are read from bottom to top.
+\begin{tikzpicture}[scale=1, anchor=base]
+   \def\gridwidth{1};
+   \foreach \dir [count=\gridheight] in {#1} {
+     % We read through first to determine how wide the grid is.
+   };
+ \pgftransformxscale{{0.225/\gridwidth}};
+\pgftransformyscale{{0.225/\gridheight}};
+   \foreach \dir [count=\i] in {#1} {
+     % Now we have to draw the lines. We start at (0,0) or (0,1).
+     \ifthenelse{\dir>0}{
+   \draw [semithick, line cap=round] (0, {\i-1})--(1, \i);
+     }{
+       \draw [semithick, line cap=round] (0, \i)--(1, {\i-1});
+     };
+   };
+ \end{tikzpicture}
+}
+
+\newcommand{\gridverysmallvert}[1]{
+ % Parameters should be +1 or -1, such as \gridsmallhoriz{1,-1,-1}.
+ % These are read from bottom to top.
+\begin{tikzpicture}[scale=1, anchor=base]
+   \def\gridwidth{1};
+   \foreach \dir [count=\gridheight] in {#1} {
+     % We read through first to determine how wide the grid is.
+   };
+ \pgftransformxscale{{0.175/\gridwidth}};
+ \pgftransformyscale{{0.175/\gridheight}};
+   \foreach \dir [count=\i] in {#1} {
+     % Now we have to draw the lines. We start at (0,0) or (0,1).
+     \ifthenelse{\dir>0}{
+   \draw [semithick, line cap=round] (0, {\i-1})--(1, \i);
+     }{
+       \draw [semithick, line cap=round] (0, \i)--(1, {\i-1});
+     };
+   };
+ \end{tikzpicture}
+}
+
+\newcommand{\gridsmallhorizfn}[1]{
+    % For use in footnotes (where everything has to be smaller, about 80%)
+    % Parameters should be +1 or -1, such as \gridsmallhoriz{1,-1,-1}.
+    \begin{tikzpicture}[scale=1, anchor=base]
+    \def\gridheight{1};
+    \foreach \dir [count=\gridwidth] in {#1} {
+        % We read through first to determine how wide the grid is.
+    };
+    \pgftransformxscale{{0.155/\gridwidth}};
+    \pgftransformyscale{{0.155/\gridheight}};
+    \foreach \dir [count=\i] in {#1} {
+        % Now we have to draw the lines. We start at (0,0) or (0,1).
+        \ifthenelse{\dir>0}{
+            \draw [semithick, line cap=round] ({\i-1}, 0)--(\i, 1);
+        }{
+            \draw [semithick, line cap=round] ({\i-1}, 1)--(\i, 0);
+        };
+    };
+  \end{tikzpicture}
+}
+
+\newcommand{\gridsmalltwobyvert}[2]{
+    % Parameters should be +1 or -1, such as \gridsmalltwobyvert{1,-1,-1}.
+    % These are read from bottom to top.
+    % In this version, we have TWO COLUMNS.
+    \begin{tikzpicture}[scale=1, anchor=base]
+    \def\gridwidth{2};
+    \foreach \dir [count=\gridheight] in {#1} {
+        % We read through first to determine how wide the grid is.
+    };
+    \pgftransformxscale{{0.225/\gridwidth}};
+    \pgftransformyscale{{0.225/\gridheight}};
+    \foreach \dir [count=\i] in {#1} {
+        % First column.
+        \ifthenelse{\dir=1 \OR \dir=-1}{
+            \ifthenelse{\dir>0}{
+                \draw [semithick, line cap=round] (0, {\i-1})--(1, \i);
+            }{
+                \draw [semithick, line cap=round] (0, \i)--(1, {\i-1});
+            };
+        }{};
+    };
+    \foreach \dir [count=\i] in {#2} {
+        % Second column.
+        \ifthenelse{\dir=1 \OR \dir=-1}{
+            \ifthenelse{\dir>0}{
+                \draw [semithick, line cap=round] (1, {\i-1})--(2, {\i  });
+            }{
+                \draw [semithick, line cap=round] (1, {\i  })--(2, {\i-1});
+            };
+        }{};
+    };
+    \end{tikzpicture}
+}
+
+\newcommand{\gridsmalltwobyvertframe}[2]{
+    % Parameters should be +1 or -1, such as \gridsmalltwobyvert{1,-1}{-1,0}.
+    % These are read from bottom to top.
+    % In this version, we have TWO COLUMNS.
+    \begin{tikzpicture}[scale=1, anchor=base]
+    \def\gridwidth{2};
+    \def\gridheight{2};
+    % \foreach \dir [count=\gridheight] in {#1} {
+    %     % We read through first to determine how wide the grid is.
+    % };
+    \pgftransformxscale{{0.25/\gridwidth}};
+    \pgftransformyscale{{0.25/\gridheight}};
+    \foreach \dir [count=\i] in {#1} {
+        % First column.
+        \ifthenelse{\dir=1 \OR \dir=-1}{
+            \ifthenelse{\dir>0}{
+                \draw [semithick, line cap=round] (0, {\i-1})--(1, \i);
+            }{
+                \draw [semithick, line cap=round] (0, \i)--(1, {\i-1});
+            };
+        }{};
+        \draw [line cap = round] (0, {\i-1}) rectangle (1, {\i});
+    };
+    \foreach \dir [count=\i] in {#2} {
+        % Second column.
+        \ifthenelse{\dir=1 \OR \dir=-1}{
+            \ifthenelse{\dir>0}{
+                \draw [semithick, line cap=round] (1, {\i-1})--(2, {\i  });
+            }{
+                \draw [semithick, line cap=round] (1, {\i  })--(2, {\i-1});
+            };
+        }{};
+        \draw [line cap = round] (1, {\i-1}) rectangle (2, {\i});
+    };
+    \end{tikzpicture}
+}
+
+\newcommand{\gridsmallthreebyvertframe}[3]{
+    % Parameters should be +1 or -1, such as \gridsmallthreebyvert{1,0,-1}{0,-1,1}{-1,1,0}.
+    % These are read from bottom to top.
+    % In this version, we have THREE COLUMNS.
+    \begin{tikzpicture}[scale=1, baseline=1pt]
+    \def\gridwidth{2};
+    \def\gridheight{2};
+    % \foreach \dir [count=\gridheight] in {#1} {
+    %     % We read through first to determine how wide the grid is.
+    % };
+    \pgftransformxscale{{0.25/\gridwidth}};
+    \pgftransformyscale{{0.25/\gridheight}};
+    \foreach \dir [count=\i] in {#1} {
+        % First column.
+        \ifthenelse{\dir=1 \OR \dir=-1}{
+            \ifthenelse{\dir>0}{
+                \draw [semithick, line cap=round] (0, {\i-1})--(1, \i);
+            }{
+                \draw [semithick, line cap=round] (0, \i)--(1, {\i-1});
+            };
+        }{};
+        \draw [line cap = round] (0, {\i-1}) rectangle (1, {\i});
+    };
+    \foreach \dir [count=\i] in {#2} {
+        % Second column.
+        \ifthenelse{\dir=1 \OR \dir=-1}{
+            \ifthenelse{\dir>0}{
+                \draw [semithick, line cap=round] (1, {\i-1})--(2, {\i  });
+            }{
+                \draw [semithick, line cap=round] (1, {\i  })--(2, {\i-1});
+            };
+        }{};
+        \draw [line cap = round] (1, {\i-1}) rectangle (2, {\i});
+    };
+    \foreach \dir [count=\i] in {#3} {
+        % Second column.
+        \ifthenelse{\dir=1 \OR \dir=-1}{
+            \ifthenelse{\dir>0}{
+                \draw [semithick, line cap=round] (2, {\i-1})--(3, {\i  });
+            }{
+                \draw [semithick, line cap=round] (2, {\i  })--(3, {\i-1});
+            };
+        }{};
+        \draw [line cap = round] (2, {\i-1}) rectangle (3, {\i});
+    };
+    \end{tikzpicture}
+}
+

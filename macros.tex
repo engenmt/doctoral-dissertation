@@ -1,0 +1,400 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Michael's macros                                                %
+% Version of 2021 July 25                                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                          Theorems etc.                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\theoremstyle{plain}
+% \newtheorem{theorem}{Theorem}%[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{observation}[theorem]{Observation}
+%\newtheorem{claim}[theorem]{Claim}
+%\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{conjollary}[theorem]{Conjollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{remark}[theorem]{Remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         Commands, etc.                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\st}{\::\:}
+\newcommand{\Age}{   \operatorname{Age} }
+\newcommand{\Av}{    \operatorname{Av}  }
+% \renewcommand{\c}{   \operatorname{C}   } % Don't do this! Need it for that fancy French ç.
+\newcommand{\conj}{  \operatorname{conj}}
+\newcommand{\cont}{  \operatorname{c}   }
+\newcommand{\Cont}{  \operatorname{C}   }
+\newcommand{\g}{     \operatorname{G}   }
+\newcommand{\Geom}{  \operatorname{Geom}}
+\newcommand{\gr}{    \operatorname{gr}  }
+\newcommand{\Grid}[1]{\operatorname{Grid}\left(#1\right)}
+\renewcommand{\hom}{ \operatorname{hom} }
+\newcommand{\height}{\operatorname{height}}
+% \newcommand{\length}{\operatorname{length}}
+\newcommand{\len}{   \operatorname{len} }
+\newcommand{\mmd}{   \operatorname{mmd} }
+\newcommand{\rev}{   \operatorname{rev} }
+\newcommand{\comp}{  \operatorname{comp}}
+\renewcommand{\u}{   \operatorname{u}   }
+\newcommand{\w}{     \operatorname{w}   }
+
+\newcommand{\worda}{\textsf{a}}
+\newcommand{\wordb}{\textsf{b}}
+
+\newcommand{\rir}{\text{\textsc{rir}}}
+
+\newcommand{\A}{  \mathcal{A}}
+\newcommand{\C}{  \mathcal{C}}
+\newcommand{\F}{  \mathcal{F}}
+\newcommand{\G}{  \mathcal{G}}
+\renewcommand{\P}{\mathcal{P}}
+\newcommand{\Q}{  \mathcal{Q}}
+\newcommand{\Lay}{\mathcal{L}}
+\newcommand{\R}{  \mathcal{R}}
+\renewcommand{\S}{\mathcal{S}}
+\newcommand{\SF}{\mathcal{SF}}
+\newcommand{\SR}{\mathcal{SR}}
+\newcommand{\T}{  \mathcal{T}}
+\newcommand{\U}{  \mathcal{U}}
+\newcommand{\W}{  \mathcal{W}}
+
+
+\newcommand{\V}{  \textsf{V}  }
+\newcommand{\X}{  \textsf{X}  }
+\newcommand{\Sep}{\textsf{Sep}}
+
+\newcommand{\sumind}{\notdirectsum}
+\newcommand{\skewind}{\notskewsum}
+
+\newcommand{\ulemph}[1]{\underline{#1}}
+\renewcommand{\emph}[1]{\ulemph{#1}}
+
+\newcommand{\union}{+}
+\newcommand{\join}{\times}
+\newcommand{\conn}{\notdirectsum}
+
+\newcommand{\size}[1]{\left\lvert{#1}\right\rvert}
+\newcommand{\magnitude}[1]{\left\lvert\left\lvert{#1}\right\rvert\right\rvert}
+\newcommand{\floor}[1]{{\left\lfloor{#1}\right\rfloor}}
+\newcommand{\ceil}[1]{{\left\lceil{#1}\right\rceil}}
+
+\newcommand{\oTheta}[1]{\Theta{\left(#1\right)}}
+\newcommand{\oOmega}[1]{\Omega{\left(#1\right)}}
+\newcommand{\oO}[1]{O{\left(#1\right)}}
+\newcommand{\oo}[1]{o{\left(#1\right)}}
+
+\newcommand{\rotle}{\rotatebox[origin=c]{-90}{$\leq$}}
+
+\newcommand{\maybeeq}{\mathrel{\rlap{\. ?}{=}}}
+
+% The OEIS links:
+\newcommand{\OEISlink}[1]{\href{https://oeis.org/#1}{#1}}
+%\newcommand{\OEISref}{\href{http://www.research.att.com/\~njas/sequences/}{OEIS}~\cite{sloane:the-on-line-enc:}}
+%\newcommand{\OEIS}[1]{(Sequence \OEISlink{#1} in the \OEISref.)}
+
+%
+\newcommand{\first}{^{\mbox{\scriptsize st}}}
+\newcommand{\nd}{^{\mbox{\scriptsize nd}}}
+\renewcommand{\th}{^{\mbox{\scriptsize th}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                           Bookkeeping                           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcounter{todocounter}
+\newcommand{\todo}[1]{
+	\addtocounter{todocounter}{1}
+	\bigskip
+	\noindent{\bf $\ll$ To-do \#\arabic{todocounter}:\rule{10pt}{0pt}#1 $\gg$}\bigskip
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                             Symbols                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\directsum}{\oplus}
+\newcommand{\skewsum}{\ominus}
+\newcommand{\bigdirectsum}{\bigoplus}
+% \newcommand{\bigskewsum}{\bigominus}
+\newcommand{\bigskewsum}{\ominus}
+
+\usepackage{cancel}
+\newcommand{\notdirectsum}{\cancel{\oplus}}
+\newcommand{\notskewsum}{\cancel{\ominus}}
+\newcommand{\bignotdirectsum}{\cancel{\bigoplus}}
+% \newcommand{\bignotskewsum}{\cancel{\bigominus}}
+\newcommand{\bignotskewsum}{\cancel{\ominus}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                          Custom grids                           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\CustomGridOne}[1][0.5]{
+	\begin{tikzpicture}[scale=1]
+		\pgftransformxscale{#1};
+		\pgftransformyscale{#1};
+
+		\draw [semithick, line cap = round] (0,0) rectangle (2,2);
+		\draw [semithick, line cap = round] (0,1) -- ++(2,0);
+		\draw [semithick, line cap = round] (1,0) -- ++(0,2);
+
+		\draw [semithick, line cap = round] (0,0) -- (1,1);
+		\draw [semithick, line cap = round] (1,1) -- (2,2);
+
+		\draw [draw=black, fill=black] (0,1) circle (4pt);
+
+	\end{tikzpicture}
+}
+
+\newcommand{\CustomGridTwo}[1][0.25]{
+	\begin{tikzpicture}[scale=1, baseline = (current bounding box.center)]
+		\pgftransformxscale{#1};
+		\pgftransformyscale{#1};
+
+		\draw [semithick, line cap = round] (0,0) rectangle (5,5);
+
+		\draw [semithick, line cap = round] (0,1) -- ++(5,0);
+		\draw [semithick, line cap = round] (0,2) -- ++(5,0);
+		\draw [semithick, line cap = round] (0,3) -- ++(5,0);
+		\draw [semithick, line cap = round] (0,4) -- ++(5,0);
+
+		\draw [semithick, line cap = round] (1,0) -- ++(0,5);
+		\draw [semithick, line cap = round] (2,0) -- ++(0,5);
+		\draw [semithick, line cap = round] (3,0) -- ++(0,5);
+		\draw [semithick, line cap = round] (4,0) -- ++(0,5);
+
+		\draw [thick, line cap = round] (0,0) -- (1,1);
+		\draw [thick, line cap = round] (1,3) -- ++(2,2);
+		\draw [thick, line cap = round] (3,1) -- ++(2,2);
+
+		\draw [draw=black, fill=black] (4,5) circle (5pt);
+		\draw [draw=black, fill=black] (5,4) circle (5pt);
+
+	\end{tikzpicture}
+}
+
+\newcommand{\CustomGridThree}[1][0.25]{
+	\begin{tikzpicture}[scale=1, baseline = (current bounding box.center)]
+		\pgftransformxscale{#1};
+		\pgftransformyscale{#1};
+
+		\draw [semithick, line cap = round] (0,0) rectangle ++(6,6);
+
+		\foreach \x in {0.25, 0.50, 0.75} {
+			\draw [draw=black, fill = black] ({0+\x},{0+\x}) circle (3pt);
+			\draw [draw=black, fill = black] ({1+\x},{6-\x}) circle (3pt);
+		}
+
+		\draw [thick, line cap = round]     (2,1) --        ++(1,1);
+		\draw [semithick, line cap = round] (2,1) rectangle ++(1,1);
+		\draw [draw=black, fill=black] (2,2) circle (5pt);
+
+		\draw [thick, line cap = round]     (3,5) --        ++(1,-1);
+		\draw [semithick, line cap = round] (3,5) rectangle ++(1,-1);
+
+		\draw [thick, line cap = round]     (4,2) --        ++(1,1);
+		\draw [semithick, line cap = round] (4,2) rectangle ++(1,1);
+		\draw [draw=black, fill=black] (4,3) circle (5pt);		
+
+		\draw [thick, line cap = round]     (5,4) --        ++(1,-1);
+		\draw [semithick, line cap = round] (5,4) rectangle ++(1,-1);
+
+	\end{tikzpicture}
+}
+
+\newcommand{\CustomGridFour}[1][0.25]{
+	\begin{tikzpicture}[scale=1, baseline = (current bounding box.center)]
+		\pgftransformxscale{#1};
+		\pgftransformyscale{#1};
+
+		\draw [thick, line cap = round]     (1,1) --        ++(1,1);
+		\draw [semithick, line cap = round] (1,1) rectangle ++(1,1);
+
+		% \draw [semithick, line cap = round] ({2+2/3},{1/3}) -- ++( 0,2);
+		% \draw [semithick, line cap = round] ({2+2/3},{1/3}) -- ++(-2,0);
+		\draw [draw=black, fill=black] ({2+2/3},{1/3}) circle (5pt);
+
+		\draw [thick, line cap = round]     (3,2) --        ++(1,1);
+		\draw [semithick, line cap = round] (3,2) rectangle ++(1,1);
+
+		% \draw [semithick, line cap = round] ({2+1/3},{3+2/3}) -- ++( 0,-2);
+		% \draw [semithick, line cap = round] ({2+1/3},{3+2/3}) -- ++( 2, 0);
+		\draw [draw=black, fill=black] ({2+1/3},{3+2/3}) circle (5pt);
+
+		% \draw [semithick, line cap = round] ({5+2/3},{3+1/3}) -- ++( 0,2);
+		% \draw [semithick, line cap = round] ({5+2/3},{3+1/3}) -- ++(-2,0);
+		\draw [draw=black, fill=black] ({5+2/3},{3+1/3}) circle (5pt);
+
+		% \draw [semithick, line cap = round] ({-1+1/3},{2/3}) -- ++( 0,-2);
+		% \draw [semithick, line cap = round] ({-1+1/3},{2/3}) -- ++( 2, 0);
+		\draw [draw=black, fill=black] ({-1+1/3},{2/3}) circle (5pt);
+
+		\foreach \x in {0.25, 0.50, 0.75} {
+			\draw [draw=black, fill = black] ({4.5+\x},{4+\x}) circle (3pt);
+			\draw [draw=black, fill = black] ({0.5-\x},{0-\x}) circle (3pt);
+		}
+
+	\end{tikzpicture}
+}
+
+\newcommand{\CustomGridFive}[1][0.25]{
+	\begin{tikzpicture}[scale=1, baseline = (current bounding box.center)]
+		\pgftransformxscale{#1};
+		\pgftransformyscale{#1};
+
+		\draw [semithick, line cap = round] (0,0) grid ++(4,4);
+
+		\draw [thick, line cap = round] (0,2) -- ++(1,1);
+		\draw [thick, line cap = round] (1,0) -- ++(1,1);
+		\draw [thick, line cap = round] (2,1) -- ++(1,1);
+		\draw [thick, line cap = round] (3,3) -- ++(1,1);
+
+		\draw [draw=black, fill=black] (2,4) circle (5pt);
+
+	\end{tikzpicture}
+}
+
+\newcommand{\CustomGridSix}[1][0.25]{
+	\begin{tikzpicture}[scale=1, baseline = (current bounding box.center)]
+		\pgftransformxscale{#1};
+		\pgftransformyscale{#1};
+
+		% \draw [semithick, line cap = round] (0,0) grid ++(4,4);
+
+		\foreach \x in {0,1,2} {
+			\draw [draw=black, fill=black] (\x,{\x+2}) circle (4pt);
+			\draw [thick, line cap = round] (\x, \x) -- ++(1,1);
+			\draw (\x, {\x+2}) -- ++(0,-2);
+		}
+
+		\draw (0,2) -- ++(2,0);
+		\draw (1,3) -- ++(2,0);
+
+		
+
+		\foreach \x in {0.25, 0.50, 0.75} {
+			\draw [draw=black, fill = black] ({3+\x},{3+\x}) circle (2.5pt);
+		}
+
+	\end{tikzpicture}
+}
+
+\newcommand{\CustomGridSeven}[1][0.25]{
+	\begin{tikzpicture}[scale=1, baseline = (current bounding box.center)]
+		\pgftransformxscale{#1};
+		\pgftransformyscale{#1};
+
+		\plotpermborder{2,1}
+
+	\end{tikzpicture}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                          Column types                           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\arraystretch}{1.5}
+\newcolumntype{L}{>{$}l<{$}}
+\newcolumntype{C}{>{$}c<{$}}
+\newcolumntype{R}{>{$}r<{$}}
+\newcolumntype{t}{>{$}r<{$\hspace{-9pt}}} % A tight R
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Define \endfirstfoot                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% See:
+% https://tex.stackexchange.com/questions/68439/caption-at-foot-of-long-tables-longtable-package
+
+\makeatletter
+\newbox\LT@firstfoot
+\def\endfirstfoot{\LT@end@hd@ft\LT@firstfoot}
+\newdimen\LT@footdiff
+\def\LT@start{%
+  \let\LT@start\endgraf
+  \endgraf\penalty\z@
+  \vskip\LTpre\endgraf
+  \LT@footdiff-\ht\LT@foot
+  \advance\LT@footdiff\ht\LT@firstfoot
+  \dimen@\pagetotal
+  \advance\dimen@ \ht\ifvoid\LT@firsthead\LT@head\else\LT@firsthead\fi
+  \advance\dimen@ \dp\ifvoid\LT@firsthead\LT@head\else\LT@firsthead\fi
+  \advance\dimen@ \ht\ifvoid\LT@firstfoot\LT@foot\else\LT@firstfoot\fi
+  \dimen@ii\vfuzz
+  \vfuzz\maxdimen
+  \setbox\tw@\copy\z@
+  \setbox\tw@\vsplit\tw@ to \ht\@arstrutbox
+  \setbox\tw@\vbox{\unvbox\tw@}%
+  \vfuzz\dimen@ii
+  \advance\dimen@ \ht
+      \ifdim\ht\@arstrutbox>\ht\tw@\@arstrutbox\else\tw@\fi
+  \advance\dimen@\dp
+      \ifdim\dp\@arstrutbox>\dp\tw@\@arstrutbox\else\tw@\fi
+  \advance\dimen@ -\pagegoal
+  \ifdim \dimen@>\z@\vfil\break\fi
+  \global\@colroom\@colht
+  \ifvoid\LT@firstfoot
+    \ifvoid\LT@foot
+    \else
+      \advance\vsize-\ht\LT@foot
+      \global\advance\@colroom-\ht\LT@foot
+      \dimen@\pagegoal\advance\dimen@-\ht\LT@foot\pagegoal\dimen@
+      \maxdepth\z@
+    \fi
+  \else
+    \advance\vsize-\ht\LT@firstfoot
+    \global\advance\@colroom-\ht\LT@firstfoot
+    \dimen@\pagegoal\advance\dimen@-\ht\LT@firstfoot\pagegoal\dimen@
+    \maxdepth\z@
+  \fi
+  \ifvoid\LT@firsthead\copy\LT@head\else\box\LT@firsthead\fi\nobreak
+  \output{\LT@output}%
+}
+\def\LT@output{%
+  \ifnum\outputpenalty <-\@Mi
+    \ifnum\outputpenalty > -\LT@end@pen
+      \LT@err{floats and marginpars not allowed in a longtable}\@ehc
+    \else
+      \setbox\z@\vbox{\unvbox\@cclv}%
+      \ifdim \ht\LT@lastfoot>\ht\LT@foot
+        \dimen@\pagegoal
+        \advance\dimen@-\ht\LT@lastfoot
+        \ifdim\dimen@<\ht\z@
+          \setbox\@cclv\vbox{\unvbox\z@\copy\LT@foot\vss}%
+          \@makecol
+          \@outputpage
+          \setbox\z@\vbox{\box\LT@head}%
+        \fi
+      \fi  
+      \global\@colroom\@colht
+      \global\vsize\@colht   
+      \vbox
+        {\unvbox\z@\box\ifvoid\LT@lastfoot\LT@foot\else\LT@lastfoot\fi}%
+    \fi
+  \else
+    \ifvoid\LT@firstfoot
+      \setbox\@cclv\vbox{\unvbox\@cclv\copy\LT@foot\vss}%
+      \@makecol
+      \@outputpage
+      \global\vsize\@colroom
+    \else
+      \setbox\@cclv\vbox{\unvbox\@cclv\box\LT@firstfoot\vss}%
+      \@makecol
+      \@outputpage
+      \global\advance\@colroom\LT@footdiff
+      \global\vsize\@colroom
+    \fi
+    \copy\LT@head\nobreak
+  \fi
+}
+\makeatother

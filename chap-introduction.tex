@@ -1,0 +1,30 @@
+\chapter{Introduction}
+\label{chap-introduction}
+
+In 1964, Rado~\cite{rado:universal-graph:} introduced the concept of a \emph{universal} graph, which he defined as a countably infinite graph that contained all finite graphs as induced subgraphs. Later that same year, Moon~\cite{moon:on-minimal-n-un:} studied finite graphs that contain all finite graphs on $m$ vertices, a property that he called $m$-universality, initiating a line of research that continues to enjoy scholarly attention. In this work, we provide a brief survey of universality for various combinatorial structures---words, integer partitions, compositions, graphs, and permutations---under induced containment orders.
+
+We say that the structure $\sigma$ is \emph{$m$-universal} if it contains all structures of size $m$ of the same kind. More generally, if $S$ is a family of structures, we say that $\sigma$ is \emph{$S_m$-universal} if it contains every structure in $S$ of size $m$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Words over a Finite Alphabet}
+\label{sec-words}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+As a simple example that will be prove to be a useful reference, consider the collection of words over a $k$-letter alphabet, where we say a word $u$ is contained in the word $v$ if $u$ is a subsequence of of $v$, and the \emph{size} of a word is its number of letters. 
+\begin{proposition}
+\label{prop-word-universal}
+	Let $\W$ denote the collection of words over a $k$-letter alphabet under the subword order. The smallest $\W_m$-universal words have size $km$.
+\end{proposition}
+\begin{proof}
+	To begin, observe that any $\W_m$-universal word must have at least $m$ occurrences of each letter, as for each letter $\ell$, it must contain the word $\ell^m$, ie. the letter $\ell$ repeated $m$ times. Thus any $\W_m$-universal word must have at least $km$ letters.
+
+	To show that this lower bound is tight, we recursively construct a $\W_m$-universal word of size $km$. Let our alphabet be $\{1, 2, \dots, k\}$. If $v$ is a $\W_{m-1}$-universal word, then the concatenation $v 12\cdots k$ is $\W_m$-universal, as the first $m-1$ letters of an abritrary word $u$ of size $m$ embed into $v$, and the final letter embeds into $12\cdots k$. This fact, together with the $\W_0$-universal empty word, shows that the word $(12 \cdots k)^m$ of size $km$ is $\W_m$-universal, completing the proof.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Keeping it in the Family: Proper Universal Structures}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Not all kinds of structures admit $m$-universal structures for all $m$. Consider, for example, the family $\C = \{\varepsilon, \worda, \wordb, \worda\worda, \wordb\wordb, \cdots\}$ of constant words over the two-letter alphabet $\{\worda, \wordb\}$. No word in $\C$ contains both $\worda$ and $\wordb$, so no word in $\C$ is $\C_m$-universal for any $m \ge 1$. Nevertheless, one may still seek universal words for $\C$ in the collection of all words over $\{\worda, \wordb\}$.
+
+A set of structures forms a \emph{class} if it is closed downward under the induced-substructure order, and a class is called \emph{proper} if it does not contain every structure of the given kind. Given a family of structures $\F$, we say that a structure is \emph{$\F_m$-universal} or \emph{$m$-universal for $\F$} if it contains every structure in $\F_m$. If an $\F_m$-universal structure itself lies in $\F$, we say it is a \emph{proper} $\F_m$-universal structure. The classes that admit proper universal objects of all sizes are precisely those that satisfy the joint-embedding property, where we say that a set $\S$ of structures satisfies the \emph{joint-embedding property} if for any $\rho, \sigma \in \S$, there is some $\tau \in \S$ so that $\rho \le \tau$ and $\sigma \le \tau$.

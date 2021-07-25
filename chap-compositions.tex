@@ -1,0 +1,420 @@
+\chapter{Compositions}
+\label{chap-compositions}
+
+A composition $c = c(1) \cdots c(n)$ is a finite sequence of positive integers, which are called the \emph{parts} of $c$. The \emph{length} of $c$, denoted $\len(c)$ is the length of the sequence, the \emph{size} of a composition, denoted $\size{c}$, is the sum of its parts. We say a composition $c = c(1) c(2) \cdots c(m)$ is contained in another composition $d = d(1) d(2) \cdots d(n)$ if there is a subsequence $d(i_1) d(i_2) \cdots d(i_m)$ of $d$ such that $c(j) \le d(i_j)$ for all $j$, and such a sequence of indices is called an \emph{embedding} of $c$ into $d$. Note that with this definition, when determining whether $c$ is contained in $d$, it suffices to take a greedy approach: embed the first part of $c$ as far left as possible in $d$, then embed the second part of $c$ as far left as possible after that, and so on. 
+
+This partial order may be exhibited visually by way of skyline diagrams, which are simply a symmetry of the Ferrers diagrams of Chapter~\ref{chap-partitions}. The \emph{skyline diagram} of the composition $c = c(1) \cdots c(n)$ consists of $n$ columns of cells, with the $i\th$ column (from the left) having $c(i)$ cells. For compositions $c$ and $d$, we have $c \le d$ if the skyline diagram of $c$ can be embedded into that of $d$. An example of composition containment displayed through skyline diagrams is shown in Figure~\ref{fig-comp-skyline}.
+
+\begin{figure}[ht]
+\captionsetup{justification=centering}
+	\begin{tikzpicture}[scale={1/3}]
+		\skylinelabeled{3,4,1,3}
+
+		\node at (6.5,3) {$\le$};
+		\node at (6.5,0) {$\le$};
+
+		\begin{scope}[shift={(7,0)}]
+			\skylinelabeled{1,4,1,4,2,1,1,4,3}
+			\skylinefilledunderlines{0,3,0,4,1,0,0,3,0}
+		\end{scope}
+	\end{tikzpicture}
+\caption{An example of composition containment presented by way of skyline diagrams.}
+\label{fig-comp-skyline}
+\end{figure}
+
+This partial order on compositions is called the \emph{generalized subword order} for words over the positive integers $\mathbb{P}$. It was first considered by Bergeron, Bousquet-M{\'e}lou, and Dulucq~\cite{bergeron:standard-paths-:}, who studied the saturated chains in this poset. Later, Sagan and Vatter~\cite{sagan:the-mobius-func:} determined the M{\"o}bius function of this poset, and Bj{\"o}rner and Sagan~\cite{bjorner:rationality-of-:comp} showed that this M{\"o}bius function has a rational generating function. Finally, Vatter~\cite{vatter:reconstructing-:} considered the analogue of the reconstruction conjecture in this poset, and Engen and Vatter~\cite{engen:on-the-dimensio:} characterized the finite-dimensional classes in this poset with respect to Dushnik--Miller dimension.
+
+The following result shows that smallest universal compositions can be constructed recursively, leading to an explicit formula on their size, and has been adapted from~\cite{albert:universal-layer:}.
+
+\begin{theorem}[Albert, Engen, Pantone, and Vatter~\cite{albert:universal-layer:}]
+\label{thm-comp-universal}
+	Let $\ell(m)$ be the size of a smallest $m$-universal composition. Then $\ell(0) = 0$ and for $m \ge 1$,
+	\begin{equation}
+	\label{eqn-composition}
+		\ell(m)
+		=
+		m + \min\{\ell(k) + \ell(m-k-1) \st 0 \le k \le m-1\}
+		\footnote{Up to shifting indices by $1$, the sequence $\ell(m)$ in Theorem~\ref{thm-comp-universal} is sequence \OEISlink{A001855} in the OEIS~\cite{sloane:the-on-line-enc:}.}
+		.
+	\end{equation}
+\end{theorem}
+
+\begin{proof}
+	We prove the theorem by induction on $m$. As the base case of $m = 0$ is trivial, suppose that the statement is true for all values less than $m$.
+
+	We begin by showing that
+	\[
+		\ell(m)
+		\le
+		m + \min\{\ell(k) + \ell(m-k-1) \st 0 \le k \le m-1\}
+	\]
+	by constructing an $m$-universal composition of this size. To this end, choose $k$ so that $\ell(k) + \ell(m-k-1)$ is minimized and then choose a composition $c$ of size $\ell(k)$ that is $k$-universal and a composition $d$ of size $\ell(m-k-1)$ that is $(m-k-1)$-universal. We claim that the composition $c m d$ is $m$-universal. 
+
+	Consider any composition $e = e(1) e(2) \cdots e(n)$ of size $m$, and choose $j$ such that
+	\[
+		\begin{array}{lccclclcl}
+			e(1) &+& \cdots &+& e(j-1) & &      &\le& k,\\
+			e(1) &+& \cdots &+& e(j-1) &+& e(j) & > & k.
+		\end{array}
+	\]
+	Since $c$ is $k$-universal and $\size{e(1) \cdots e(j-1)} \le k$, we have that $c$ contains the composition $e(1) \cdots e(j-1)$. Moreover, the part $e(j)$ embeds into the part $m$. Finally, since $d$ is $(m-k-1)$-universal, it necessarily contains $e(j+1) \cdots e(n)$ as $\size{e(j+1) \cdots e(n)} \le m - k -1$. Thus $e(1) \cdots e(n)$ is contained in the composition $c m d$, and as $e$ was an arbitrary composition of size $m$, we have that $c m d$ is $m$-universal.
+
+	To establish the reverse inequality 
+	\[
+		\ell(m)
+		\ge
+		m + \min\{\ell(k) + \ell(m-k-1) \st 0 \le k \le m-1\},
+	\]
+	we prove that every $m$-universal composition must have size at least $m + \ell(k) + \ell(m-k-1)$ for some $0 \le k \le m-1$. Let $c$ be an $m$-universal composition. As $c$ contains the composition $m$, we may choose some index $j$ so that $c(j) \ge m$. Choose $k$ so that
+	\[
+		\ell(k) \le c(1) + \cdots + c(j-1) < \ell(k+1),
+	\]
+	meaning that there is some composition $d$ of size $k+1$ that does not embed into $c(1) \cdots c(j-1)$, and thus the earliest that $d$ may embed into $c$ is into $c(1) \cdots c(j)$. 
+
+	We claim that $c(j+1) \cdots c(n)$ must be $(m-k-1)$-universal. Let $e$ be an arbitrary composition of size $m-k-1$. As $c$ is $m$-universal, it must contain the composition $de$. Since $d$ can embed no earlier than into $c(1) \cdots c(j)$, $e$ must embed entirely within $c(j+1) \cdots c(n)$. As $e$ was an arbitrary composition of size $m-k-1$, the composition $c(j+1) \cdots c(n)$ is therefore $(m-k-1)$-universal, and thus $c(j+1) + \cdots + c(n) \ge \ell(m-k-1)$. Together, this shows
+	\begin{align*}
+		\size{c}
+			&= \size{c(1) \cdots c(j-1)} + \size{c(j)} + \size{c(j+1) \cdots c(n)} \\
+			&\ge \ell(k) + m + \ell(m-k-1),
+	\end{align*}
+	completing the proof.
+\end{proof}
+
+By showing that $\ell$ is a convex sequence, we may obtain an explicit formula for $\ell(m)$. In~\cite{morris:some-theorems-on:}, Morris proves that the sequence defined by $G(1) = 0$ and, for $m > 1$ 
+\[
+	G(m) 
+	= 
+	n + \min\{G(k) + G(m-k) \st 1 \le k \le m-1\}
+\]
+is convex, and it is elementary to show that $G(m+1) = \ell(m) + m$. For completeness, we present a proof of the convexity of $\ell$, adapted from Morris's proof of the convexity of $G$.
+
+\begin{proposition}
+\label{prop-ell-convex}
+	The sequence $\ell(m)$ is convex, ie. $2\ell(m) \le \ell(m-1) + \ell(m+1)$ for all $m \ge 1$.
+\end{proposition}
+\begin{proof}
+	We prove that $\ell$ is convex at $m$, ie. $2\ell(m) \le \ell(m-1) + \ell(m+1)$ by induction on $m$. Our base case of $m = 1$ follows from computing $\ell(0) = 0$, $\ell(1) = 1$, and $\ell(2) = 3$, so assume that the statement holds for all values less than $m$. We proceed in two cases based on the parity of $m$.
+
+	First, assume that $m$ is even, with $m = 2n$. We may compute the formulas for $\ell(m-1)$, $\ell(m)$, and $\ell(m+1)$ using that convexity of $\ell$ at values $m' < m$ implies that the minimum of $\ell(k) + \ell(m'-k)$ over all values of $k$ occurs when $k = \floor{m'/2}$.
+	\begin{align*}
+		\ell(2n-1)
+			&= 2n-1 + \min\{\ell(k) + \ell(2n-2-k) \st 0 \le k \le 2n-2\} \\
+			&= 2n-1 + \ell(n-1) + \ell(n-1) \\
+		\ell(2n)
+			&= 2n   + \min\{\ell(k) + \ell(2n-1-k) \st 0 \le k \le 2n-1\} \\
+			&= 2n   + \ell(n-1) + \ell(n) \\
+		\ell(2n+1)
+			&= 2n+1 + \min\{\ell(k) + \ell(2n  -k) \st 0 \le k \le 2n  \} \\
+			&= 2n+1 + \ell(n) + \ell(n)
+	\end{align*}
+	These formulas show that in this case, we in fact have equality: $2\ell(2n) = \ell(2n-1) + \ell(2n+1)$.
+
+	On the other hand, assume that $m$ is odd, with $m = 2n+1$. As before, the convexity of $\ell$ at values less than $m$ allows us to write explicit recursive formulas for $\ell(2n)$, $\ell(2n+1)$, and $\ell(2n+2)$.
+	\begin{align*}
+		\ell(2n)
+			&= 2n   + \min\{\ell(k) + \ell(2n-1-k) \st 0 \le k \le 2n-1\} \\
+			&= 2n   + \ell(n-1) + \ell(n) \\
+		\ell(2n+1)
+			&= 2n+1 + \min\{\ell(k) + \ell(2n  -k) \st 0 \le k \le 2n  \} \\
+			&= 2n+1 + \ell(n) + \ell(n) \\
+		\ell(2n+2)
+			&= 2n+2 + \min\{\ell(k) + \ell(2n+1-k) \st 0 \le k \le 2n+1\} \\
+			&= 2n+2 + \ell(n) + \ell(n+1)
+	\end{align*}
+	Some arithmetic reveals that the inequality $2 \ell(2n+1) \le \ell(2n) + \ell(2n+2)$ is equivalent to the inequality $2\ell(n) \le \ell(n-1) + \ell(n+1)$, which is true by induction, completing the proof.
+\end{proof}
+
+Proposition~\ref{prop-ell-convex} allows us to recursively define an explicit sequence of smallest $m$-universal compositions. Let $w_0$ be the empty composition, and for $m \ge 1$, define $w_m$ as the concatenation $w_{\floor{(m-1)/2}} m w_{\ceil{(m-1)/2}}$. Then, as $\ell(k) + \ell(m-1-k)$ is minimized at $k = \floor{(m-1)/2}$, $w_m$ is $m$-universal by the proof of Theorem~\ref{thm-comp-universal} and has length $m$ and size $\ell(m)$. Figure~\ref{fig-comp-universal} shows the skyline diagram of $w_{63}$.
+
+Knuth gave an explicit formula for $\ell(m)$ in \emph{The Art of Computer Programming, Volume 3}~\cite[Section 5.3.1, Eq. (3)]{knuth:the-art-of-comp:3}, where it is related to sorting by binary insertion. Knuth shows there that,
+\[
+	\ell(m) 
+	= 
+	(m+1)\ceil{\log_2 (m+1)} - 2^{\ceil{\log_2 (m+1)}} + 1,
+\]
+so $\ell(m) \sim m \log_2(m)$.
+
+\begin{figure}[ht]
+\captionsetup{justification=centering}
+	\begin{tikzpicture}[scale=0.1]
+		% from functools import lru_cache
+		%
+		% @lru_cache
+		% def w(n):
+		%     if n == 0: return []
+		%     return w((n-1)//2) + [n] + w(n//2)
+		%
+		% inner = ','.join(str(val) for val in w(63))
+		%
+		% print(r'\skyline{' + inner + r'}')
+		
+		% \skyline{1,3,1,7,1,3,1,15,1,3,1,7,1,3,1,31,1,3,1,7,1,3,1,15,1,3,1,7,1,3,1} % 31
+		\skyline{1,3,1,7,1,3,1,15,1,3,1,7,1,3,1,31,1,3,1,7,1,3,1,15,1,3,1,7,1,3,1,63,1,3,1,7,1,3,1,15,1,3,1,7,1,3,1,31,1,3,1,7,1,3,1,15,1,3,1,7,1,3,1} % 63
+	\end{tikzpicture}
+\caption{The $63$-universal composition $w_{63}$ of length $63$ and size $\ell(63) = 321$.}
+\label{fig-comp-universal}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Proper Classes of Compositions}
+\label{sec-comp-classes}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In this section, we examine the problem of universality for proper classes of compositions. As we will see, every proper composition class admits universal compositions of linear size. Moreover, we study universality of two natural families of compositions as well as for the class of compositions with at most one large part. For reference, some known or computed values of minimum sizes for universal compositions for various classes are presented in Appendix~\ref{appendix-compositions}. 
+
+As in Chapter~\ref{chap-partitions}, we define infinite structures to aid discussion of proper classes. We define a \emph{potentially infinite} composition to be a word over the alphabet $\mathbb{P} \cup \{n^\omega \st n \in \mathbb{P}\} \cup \{\omega, \omega^\omega\}$. As in the case of partitions, the symbol $\omega$ stands for an infinite part, the symbol $n^\omega$ stands for an infinite number of parts equal to $n$, and the symbol $\omega^\omega$ stands for an infinite number of infinite parts. Given a potentially infinite composition $c$, the \emph{age} of $c$, denoted $\Age(c)$, is the set of all compositions whose skyline diagrams embed into the skyline diagram of $c$ (the term \emph{age} dates to Fra{\"i}ss{\'e}~\cite{fraisse:sur-lextension-:}.) An example of containment of a finite skyline diagram in an infinite one, together with the corresponding set containment, is presented in Figure~\ref{fig-comp-age}.
+
+\begin{figure}[ht]
+\captionsetup{justification=centering}
+	\begin{tikzpicture}[scale={1/2}]
+		\skylinelabeled{1,3,2,3,1}
+
+		\node at ( 7,3) {$\le$};
+		\node at ( 7,0) {$\in$};
+		\node at (14,0) {$\Age(1^\omega \omega 2 1 3 1^\omega)$};
+
+		\begin{scope}[shift={(8,0)}]
+			\skyline{1,1,1,4,2,1,3,1,1,1}
+			\foreach \d in {0.25, 0.50, 0.75} {
+				\filldraw[black] (     \d,   1.5) circle [radius=0.05cm];
+				\filldraw[black] ({11+\d},   1.5) circle [radius=0.05cm];
+				\filldraw[black] (    4.5,{5+\d}) circle [radius=0.05cm];
+			}
+			\skylinefilled{0,0,1,3,2,0,3,1}
+		\end{scope}
+	\end{tikzpicture}
+\caption{Containment of a finite skyline diagram into an infinite one.}
+\label{fig-comp-age}
+\end{figure}
+
+The following proposition shows that any proper composition class admits universal compositions of linear size.
+
+\begin{theorem}
+\label{thm-comp-universal-proper}
+	For any proper class of compositions $\C$, there is a positive constant $c$ so that there are $\C_m$-universal compositions of size $cm$ for all positive integers $m$.
+\end{theorem}
+\begin{proof}
+	We show that $\C$ admits linear-size universal compositions by first showing that $\C$ is contained in an age of the form $\Age(\ell^\omega (\omega \ell^\omega)^k)$, which in turn admits linear-size universal compositions.
+
+	Let $\ell$ be the largest integer such that $\C$ contains $\ell^n$ for all $n$, and let $k$ be the largest integer such that $\C$ contains $(\ell + 1)^k$. We claim that $\C \subseteq \Age(\ell^\omega (\omega \ell^\omega)^k)$. If $c \in \C$, then $c$ does not contain $(\ell + 1)^k$, and thus $c$ has at most $k$ parts of size larger than $\ell$. The class $\Age(\ell^\omega (\omega \ell^\omega)^k)$ is precisely the class of compositions that have at most $k$ parts larger than $\ell$, and thus we have $c \in \Age(\ell^\omega (\omega \ell^\omega)^k)$.
+
+	To construct an $m$-universal composition for $\Age(\ell^\omega (\omega \ell^\omega)^k)$, note that if $c$ and $d$ are $m$-universal compositions for $\Age(u)$ and $\Age(v)$ respectively, then $cd$ is $m$-universal for $\Age(uv)$. Thus, as the composition $\ell^m$ is $m$-universal for $\Age(\ell^\omega)$ and the composition $m$ is $m$-universal for $\Age(\omega)$, we may conclude that $\ell^m (m \ell^m)^k$ is $m$-universal for $\Age(\ell^\omega (\omega \ell^\omega)^k)$.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Compositions with Bounded Part Sizes}
+\label{subsec-comp-bdd-pt-size}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Fix a positive integer $t$, and consider the class $\Age(t^\omega)$ of compositions whose parts are all of size at most $t$. In a composition $c$, each part of size larger than $t$ may be replaced one of size $t$ without disturbing any of the embeddings of compositions in $\Age(t^\omega)$. 
+\begin{observation}
+	Let $c$ be a composition of size $n$. For each positive integer $t$, there is composition $c'$ of size at most $n$ in $\Age(t^\omega)$ that contains every composition in $\Age(t^\omega)$ that $c$ does.
+\end{observation}
+
+In particular, if $c$ is any $\Age(t^\omega)_m$-universal composition, then there is a weakly smaller proper $\Age(t^\omega)_m$-universal composition, and thus the smallest $\Age(t^\omega)_m$-universal compositions and the smallest proper $\Age(t^\omega)_m$-universal compositions have the same size.
+
+Smallest proper universal compositions for $\Age(t^\omega)$ can be constructed in a manner similar that of the proof of Theorem~\ref{thm-comp-universal}. The construction only differs in that the ``large'' part of size $m$ used in the proof of Theorem~\ref{thm-comp-universal} needs to only have size $\min\{t, m\}$ in this case.
+\begin{theorem}
+\label{thm-comp-bdd-part-size}
+	Let $\ell_t(m)$ denote the size of the smallest (proper) $\Age(t^\omega)_m$-universal compositions. Then $\ell_t(0) = 0$ and for $m \ge 1$,
+	\[
+		\ell_t(m)
+		=
+		\min\{t,m\} + \min\{\ell_t(k) + \ell_t(m-k-1) \st 0 \le k \le m-1\}.
+	\]
+\end{theorem}
+\begin{proof}
+	We prove the theorem by induction on $m$. As the base case of $m = 0$ is trivial, suppose that the statement is true for all values less than $m$. 
+	
+	We begin by showing that
+	\[
+		\ell_t(m) 
+		\le
+		\min\{t, m\} + \min\{\ell_t(k) + \ell_t(m-k-1) \st 0 \le k \le m-1\}.
+	\]
+	by constructing an $\Age(t^\omega)_m$-universal composition of this size. To this end, choose $k$ so that $\ell_t(k) + \ell_t(m-k-1)$ is minimized and then choose a proper $\Age(t^\omega)_k$-universal composition $c$ of size $\ell_t(k)$ and a proper $\Age(t^\omega)_{m-k-1}$-universal composition $d$ of size $\ell_t(m-k-1)$. We claim that the composition $c (\min\{t, m\}) d \in \Age(t^\omega)$ is $\Age(t^\omega)_m$-universal.
+
+	Consider any composition $e = e(1) e(2) \cdots e(n) \in \Age(t^\omega)$ of size $m$, and choose $j$ such that
+	\[
+		\begin{array}{lccclclcl}
+			e(1) &+& \cdots &+& e(j-1) & &      &\le& k,\\
+			e(1) &+& \cdots &+& e(j-1) &+& e(j) & > & k.
+		\end{array}
+	\]
+	Since $c$ is $\Age(t^\omega)_k$-universal and $\size{e(1) \cdots e(j-1)} \le k$, we have that $c$ contains the composition $e(1) \cdots e(j-1)$. Moreover, the part $e(j)$ embeds in the part $\min\{t, m\}$. Finally, since $d$ is $\Age(t^\omega)_{m-k-1}$-universal, it contains the composition $e(j+1) \cdots e(n)$ as $\size{e(j+1)\cdots e(n)} \le m-k-1$. Thus $e(1) \cdots e(n)$ is contained in the composition $c (\min\{t, m\}) d$, and as $e$ was an arbitrary composition of size $m$, we have that $c (\min\{t, m\}) d$ is $\Age(t^\omega)_m$-universal.
+
+	To establish the reverse inequality
+	\[
+		\ell_t(m)
+		\ge
+		\min\{t, m\} + \min\{\ell_t(k) + \ell_t(m-k-1) \st 0 \le k \le m-1\},
+	\]
+	we prove that every proper $\Age(t^\omega)_m$-universal composition must have size at least $\min\{t, m\} + \ell_t(k) + \ell_t(m-k-1)$ for some $k$. Let $c$ be an $\Age(t^\omega)_m$-universal composition. As $c$ contains the composition $\min\{t, m\}$, so there must be some index $j$ so that $c(j) \ge \min\{t, m\}$. Choose $k$ so that
+	\[
+		\ell_t(k) 
+		\le 
+		c(1) + \cdots + c(j-1) 
+		< 
+		\ell_t(k+1),
+	\]
+	meaning that there is some composition $d$ of size $k+1$ that does not embed into $c(1) \cdots c(j)$, and thus the earliest $d$ may embed into $c$ is into $c(1) \cdots c(j)$.
+
+	We claim that $c(j+1) \cdots c(n)$ must be $(m-k-1)$-universal for $\Age(t^\omega)$. Let $e$ be an arbitrary composition in $\Age(t^\omega)$ of size $m-k-1$. As $c$ is $\Age(t^\omega)_m$-universal, it must contain the composition $de$. Since $d$ can embed no earlier than into $c(1) \cdots c(j)$, $e$ must embed entirely within $c(j+1) \cdots c(n)$. As $e$ was an abitrary composition of size $m-k-1$, the composition $c(j+1) \cdots c(n)$ is therefore $(m-k-1)$-universal for $\Age(t^\omega)$, and thus $c(j+1) + \cdots + c(n) \ge \ell_t(m-k-1)$. Finally, we have
+	\begin{align*}
+		\size{c}
+			&= \size{c(1) \cdots c(j-1)} + \size{c(j)} + \size{c(j+1) \cdots c(n)} \\
+			&\ge \ell_t(k) + \min\{t, m\} + \ell_t(m-k-1),
+	\end{align*}
+	completing the proof.
+\end{proof}
+
+\begin{figure}[ht]
+	\captionsetup{justification=centering}
+	\begin{tikzpicture}[scale=0.2]
+		\skyline{1,3,1,7,1,3,1,7,1,3,1,7,1,3,1,7,1,3,1,7,1,3,1,7,1,3,1,7,1,3,1,7,1,3,1,7,1,3,1,7,1,3,1,7,1,3,1,7,1,3,1,7,1,3,1,7,1,3,1,7,1,3,1}
+	\end{tikzpicture}
+	\caption{A proper $\Age(7^\omega)_{63}$-universal composition of length $63$ and size $\ell_7(63) = 185$.}
+	\label{fig-bdd-part-size}
+\end{figure}
+
+Figure~\ref{fig-bdd-part-size} shows a smallest (proper) $\Age(7^\omega)_{63}$-universal composition of the above construction. Unlike the sequence $\ell(m)$, the sequences $\ell_t(m)$ do not appear to be convex. Through tedious casework, the explicit formulas for the sequences $\ell_t(m)$ may be determined for small values of $t$, and computation supports the following conjecture:
+
+\begin{conjecture}
+\label{conj-comp-bdd-part-size}
+	Let $t = 2^k + r$ with $0 \le r < 2^k$. Then for $m \ge k$ we have
+	\[
+		\ell_t(m)
+		=
+		km + k - 2^k + 1 + \sum_{i = 0}^{r-1} \floor{\dfrac{m-i}{2^k}}.
+	\]
+\end{conjecture}
+
+In particular, if $t = 2^k - 1$, then for $m \ge k$ we conjecture
+\[
+	\ell_t(m)
+	=
+	km + k - 2^k + 1.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Compositions with a Bounded Number of Parts}
+\label{subsec-comp-bdd-num-pts}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Fix a positive integer $t$, and consider the class $\Age(\omega^t)$ of compositions that have at most $t$ parts. For $m \le t$, $\Age(\omega^t)$ contains all compositions of size $m$, and the composition $w_m$ is in $\Age(\omega^t)$, so the smallest proper $\Age(\omega^t)_m$-universal compositions are smallest $m$-universal compositions for $m \le t$. 
+
+\begin{proposition}
+\label{thm-comp-bdd-num-parts-small}
+	For all $m \le t$, the smallest proper $\Age(\omega^t)_m$-universal compositions have size $\ell(m)$. 
+\end{proposition}
+
+Given an $(m-1)$-universal composition $c$ for $\Age(\omega^t)$, we may form an $m$-universal composition for $\Age(\omega^t)$ of the same length by incrementing each of its parts, as the next result shows.
+\begin{proposition}
+\label{prop-comp-bdd-num-parts-proper}
+	For all $m > t$, if $c$ is a $\Age(\omega^t)_{m-1}$-universal composition, then the composition $c^{+1}$ formed by incrementing each part of $c$ is $m$-universal for $\Age(\omega^t)$.
+\end{proposition}
+Before presenting the proof of Proposition~\ref{prop-comp-bdd-num-parts-proper}, we note that it implies the existence of proper $\Age(\omega^t)_m$-universal compositions of size $t(m-t) + \ell(t)$ by simply incrementing each part of $w_t$ a total of $m-t$ times. For any composition $c$, let $c^{+n}$ denote the composition formed by adding $n$ to each part of $c$. A proper universal composition for $\Age(\omega^7)$ formed in this way is drawn in Figure~\ref{fig-comp-bdd-num-parts}.
+\begin{corollary}
+	For all $m > t$, $w_t^{+(m-t)}$ is a proper $\Age(\omega^t)_m$-universal of size $tm - t^2 + \ell(t)$.
+\label{cor-comp-bdd-num-parts-proper}
+\end{corollary}
+%
+\newenvironment{proof-of-prop-comp-bdd-num-parts-proper}{%
+	\medskip\noindent {\it Proof of Proposition~\ref{prop-comp-bdd-num-parts-proper}.\/}%
+}{%
+	\qed\bigskip%
+}
+\begin{proof-of-prop-comp-bdd-num-parts-proper}
+	Suppose that $m > t$ and that $c$ is a proper $\Age(\omega^t)_{m-1}$-universal composition. Let $c^{+1}$ be the composition formed by incrementing each part of $c$ and let $d = d(1) \cdots d(n)$ be an arbitrary composition in $\Age(\omega^t)$ of size $m$. As $m > t$, there is some part $d(j)$ of $d$ such that $d(j) > 1$. Thus, the composition $d_{j}^{-1}$ formed from $d$ by decrementing its $j\th$ part is a composition of size $m-1$ in $\Age(\omega^t)$, and thus embeds into $c$, ie. there is a subsequence $c(i_1) c(i_2) \cdots c(i_n)$ of $c$ such that $d_{j}^{-1}(k) \le c(i_k)$ for all $k$. Then, as $d(k) \le d_{j}^{-1}(k) + 1$ for all $k$, we have that $d(k) \le c(i_k) + 1$ for all $k$, so $d$ embeds into $c^{+1}$, completing the proof.
+\end{proof-of-prop-comp-bdd-num-parts-proper}
+
+\begin{figure}[ht]
+\captionsetup{justification=centering}
+	\begin{tikzpicture}[scale=0.2]
+		\skyline{7, 9, 7, 13, 7, 9, 7}
+	\end{tikzpicture}
+\caption{The proper $\Age(\omega^7)_{13}$-universal composition $w_7^{+6}$ of length $7$ and size $59$.}
+\label{fig-comp-bdd-num-parts}
+\end{figure}
+
+In the case that $t = 2$, Corollary~\ref{cor-comp-bdd-num-parts-proper} shows that there are proper $\Age(\omega^2)_m$-universal compositions of size $2m-1$. In fact, the smallest $\Age(\omega^2)_m$-universal compositions of arbitrary length have this size as well:
+
+\begin{proposition}
+\label{prop-comp-length-2-improper}
+	The smallest (proper) $\Age(\omega^2)_m$-universal compositions have size $2m-1$.
+\end{proposition}
+\begin{proof}
+	Let $c = c(1) \cdots c(\ell)$ be an $\Age(\omega^2)_m$-universal composition for $m \ge 2$. As $c$ must contain the composition $m$, there must be some $j$ such that $c(j) \ge m$. Let $a$ be the size of the largest part before $c(i)$ and $0$ if $i = 1$. Similarly, let $b$ be the size of the largest part after $c(i)$ and $0$ if $i = \ell$. There are now two cases to consider: if $a < m-1$ and if $a \ge m-1$. If $a < m-1$, then $c$ contains the composition $(a+1)(m-a-1)$. As $a$ is the largest part to the left of $c(i)$, we must have $b \ge m-a-1$. Thus
+	\begin{align*}
+		\size{c}
+			&\ge a + m + b \\
+			&\ge a + m + (m-a-1) \\
+			&= 2m-1.
+	\end{align*}
+	On the other hand, if $a \ge m-1$, then we have
+	\begin{align*}
+		\size{c}
+			&\ge   a   + m + b \\
+			&\ge (m-1) + m + 0 \\
+			&= 2m-1,
+	\end{align*}
+	as well, completing the proof.
+\end{proof}
+
+% Not every smallest $\Age(\omega^2)_m$-universal composition lies in $\Age(\omega^2)$. The composition $\floor{\frac{m-1}{2}} m \ceil{\frac{m-1}{2}}$ of size $2m-1$ may be shown to be $\Age(\omega^2)_m$-universal but does not lie in $\Age(\omega^2)$.
+
+Computational evidence indicates that each smallest $m$-universal composition for $\Age(\omega^t)$ for $m > t$ can be constructed with Proposition~\ref{prop-comp-bdd-num-parts-proper}, and thus we make the following conjecture.
+\begin{conjecture}
+\label{conj-comp-bdd-num-parts-proper}
+	For $m > t$, the smallest proper $m$-universal compositions for $\Age(\omega^t)$ have size $tm - t^2 + \ell(t)$.
+\end{conjecture}
+
+In the case that $t = 3$, Corollary~\ref{cor-comp-bdd-num-parts-proper} shows that there are proper $\Age(\omega^3)_m$-universal compositions of size $3m-4$, and empirical evidence suggests---and we conjecture---that the smallest $\Age(\omega^3)_m$-universal compositions of arbitrary length have this size as well. However, for $t \ge 4$, computations reveal that the smallest $\Age(\omega^t)_m$-universal compositions are strictly smaller than the proper $\Age(\omega^t)_m$-universal composition presented in Corollary~\ref{cor-comp-bdd-num-parts-proper}, and thus the size of smallest $\Age(\omega^t)_m$-universal compositions for $t > 4$ is unknown.
+
+\begin{conjecture}
+\label{conj-comp-length-3-improper}
+	For all $m \ge 3$, there are smallest $\Age(\omega^3)_m$-universal compositions of length $3$.
+\end{conjecture}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Compositions with at Most One Large Part}
+\label{subsec-comp-one-large-part}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+As one final case study, consider the class $\C = \Age(1^\omega \omega 1^\omega)$ of compositions with at most one part of size greater than $1$.
+
+\begin{theorem}
+	For $m \ge 3$, the smallest (proper) $\C_m$-universal compositions have size $3m-4$.
+\end{theorem}
+\begin{proof}
+	To begin, we claim that the composition $c = 1^{m-2} m 1^{m-2}$ is a proper $\C_m$-universal composition. Let $d$ be an arbitrary composition in $\C_m$. If $d$ has a part that is at least $2$, then it must decompose as $1^i j 1^k$, where $2 \le j \le m$ and both $i$ and $k$ are at most $m-2$. Thus $d$ embeds into $1^{m-2} m 1^{m-2}$. Otherwise, $d$ must be the composition $1^m$, and as the $c$ has length $2m-3 \ge m$, we have that $d$ embeds into $c$, and thus $c$ is $\C_m$-universal.
+
+	Now, suppose $c$ is any $\C_m$-universal composition. We claim that $c$ must have size at least $3m-4$. As $c$ contains the composition $m$, there must some index $j$ so that $c(j) \ge m$. Let $a$ denote the prefix of $c$ before the part $c(j)$ and let $b$ denote the suffix of $c$ after the part $c(j)$ so that $c = a c(j) b$. Let $\operatorname{h}(a)$ and $\operatorname{h}(b)$ denote the largest parts of $a$ and $b$, respectively. If $\operatorname{h}(a) < m$, then $c$ must contain the composition $(\operatorname{h}(a)+1)1^{m-\operatorname{h}(a)-1}$, and as the earliest that the part $\operatorname{h}(a)+1$ may embed into $c$ is into $c(i)$, the composition $1^{m-\operatorname{h}(a)-1}$ must embed into $b$, and thus $\len(b) \ge m-\operatorname{h}(a)-1$. If $\operatorname{h}(a) \ge m$, then $\len(b) \ge 0 > m - \operatorname{h}(a) - 1$ anyways. Similarly, we must have $\len(a) \ge m - \operatorname{h}(b) - 1$ in any case. For any composition $d$, we have $\size{d} \ge \len(d) + \operatorname{h}(d) - 1$, and thus
+	\begin{align*}
+		\size{c}
+			&= c(i) + \size{a} + \size{b} \\
+			&\ge m +  \len(a) + \operatorname{h}(a) - 1 + \len(b) + \operatorname{h}(b)  - 1 \\
+			&=   m + (\len(a) + \operatorname{h}(b)) +   (\len(b) + \operatorname{h}(a)) - 2 \\
+			&\ge m + (m-1) + (m-1) - 2 \\
+			&= 3m-4,
+	\end{align*}
+	as desired.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Concluding Remarks}
+\label{sec-comp-conclusion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In its proof, Theorem~\ref{thm-comp-universal} provides a recursive strategy for constructing smallest $m$-universal compositions, leading to a precise formula for their size asymptotic to $m \log m$. As in the case of integer partitions discussed in Chapter~\ref{chap-partitions}, any proper class of compositions $\C$ admits proper $\C_m$-universal compositions if and only if $\C$ satisfies the joint-embedding property. This property is equivalent to $\C$ being the age of some potentially infinite composition $u$, as the following result of Fra{\"i}ss{\'e} shows:
+
+\begin{theorem}[Fra{\"i}ss{\'e}~\cite{fraisse:sur-lextension-:}; see also Hodges~{\cite[Section 7.1]{hodges:model-theory:}}] 
+	The following are equivalent for a class $\P$ of integer partitions or compositions:
+	\begin{enumerate}
+		\item $\P$ cannot be expressed as the union of two proper subclasses,
+		\item $\P$ satisfies the \emph{joint embedding property}, meaning that for every $a, b \in \P$ there is some $c \in \P$ such that $a, b \le c$, and 
+		\item $\P = \Age(u)$ for some word $u \in (\mathbb{P} \cup \{n^\omega \st n \in \mathbb{P}\} \cup \{\omega, \omega^\omega\})^\ast$.
+	\end{enumerate}
+\end{theorem}
+
+While Theorem~\ref{thm-comp-bdd-part-size} provides a recursive formula for the size of the smallest (proper) universal compositions for the classes of compositions whose part sizes are bounded, an explicit formula exists only in Conjecture~\ref{conj-comp-bdd-part-size}. For the classes of compositions of bounded size, the both the sizes of the smallest proper and not-necessarily-proper universal compositions remain unknown, but Conjecture~\ref{conj-comp-bdd-num-parts-proper} provides a guess in the former case.

@@ -1,0 +1,117 @@
+\usepackage{tikz}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%% Notes %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \oplus=\mathchar"2208
+% \bigoplus=\mathchar"134C
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%% Plusses %%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\DeclareRobustCommand{\yesplus}[3]{
+	\begin{tikzpicture}[every path/.style={line width = #2mm, line cap = round}, baseline=#3]
+		\pgftransformxscale{#1};
+		\pgftransformyscale{#1};
+		
+		\draw (-1, 0) -- (1,0);
+		\draw ( 0,-1) -- (0,1);
+		
+		\draw (0,0) circle (1);
+	\end{tikzpicture}
+}
+\newcommand{\directsum}{{\mathchoice%
+	{\hspace{2.75pt}\mathbin{\yesplus{0.112}{0.115}{-2.51}}\hspace{2.75pt}}%
+	{\hspace{2.75pt}\mathbin{\yesplus{0.112}{0.115}{-2.51}}\hspace{2.75pt}}%
+	{\hspace{0.55pt}\mathbin{\yesplus{0.085}{0.100}{-1.75}}\hspace{0.55pt}}%
+	{\hspace{0.55pt}\mathbin{\yesplus{0.070}{0.085}{-1.25}}\hspace{0.55pt}}%
+}}
+% \DeclareMathOperator{\bigdirectsum}{\scalerel*{\directsum}{\sum}}
+\newcommand{\bigdirectsum}{{\mathchoice%
+	{\hspace{2.20pt}\mathbin{\yesplus{0.230}{0.300}{-2.50}}\hspace{2.20pt}}%
+	{\hspace{2.20pt}\mathbin{\yesplus{0.164}{0.250}{-2.51}}\hspace{2.20pt}}%
+	{\hspace{0.70pt}\mathbin{\yesplus{0.120}{0.210}{-1.75}}\hspace{0.70pt}}%
+	{\hspace{0.50pt}\mathbin{\yesplus{0.085}{0.170}{-1.25}}\hspace{0.55pt}}%
+}}
+
+\DeclareRobustCommand{\noplus}[3]{
+	\begin{tikzpicture}[every path/.style={line width = #2mm, line cap = round}, baseline=#3]
+		\pgftransformxscale{#1};
+		\pgftransformyscale{#1};
+		
+		\draw (-1, 0) -- (1,0);
+		\draw ( 0,-1) -- (0,1);
+		\draw (-1,-1) -- (1,1);
+		
+		\draw (0,0) circle (1);
+	\end{tikzpicture}
+}
+\newcommand{\notdirectsum}{{\mathchoice%
+	{\hspace{2.75pt}\mathbin{\noplus{0.112}{0.115}{-2.51}}\hspace{2.75pt}}%
+	{\hspace{2.75pt}\mathbin{\noplus{0.112}{0.115}{-2.51}}\hspace{2.75pt}}%
+	{\hspace{0.55pt}\mathbin{\noplus{0.085}{0.100}{-1.75}}\hspace{0.55pt}}%
+	{\hspace{0.55pt}\mathbin{\noplus{0.070}{0.085}{-1.25}}\hspace{0.55pt}}%
+}}
+
+% \DeclareMathOperator{\bignotdirectsum}{\scalerel*{\notdirectsum}{\sum}}
+\newcommand{\bignotdirectsum}{{\mathchoice%
+	{\hspace{2.20pt}\mathbin{\noplus{0.230}{0.300}{-2.50}}\hspace{2.20pt}}%
+	{\hspace{2.20pt}\mathbin{\noplus{0.164}{0.250}{-2.51}}\hspace{2.20pt}}%
+	{\hspace{0.70pt}\mathbin{\noplus{0.120}{0.210}{-1.75}}\hspace{0.70pt}}%
+	{\hspace{0.50pt}\mathbin{\noplus{0.085}{0.170}{-1.25}}\hspace{0.55pt}}%
+}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%% Minuses %%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareRobustCommand{\yesminus}[3]{
+	\begin{tikzpicture}[every path/.style={line width = #2mm, line cap = round}, baseline=#3]
+		\pgftransformxscale{#1};
+		\pgftransformyscale{#1};
+		
+		\draw (-1, 0) -- (1,0);
+		
+		\draw (0,0) circle (1);
+	\end{tikzpicture}
+}
+\newcommand{\skewsum}{{\mathchoice%
+	{\hspace{2.75pt}\mathbin{\yesminus{0.112}{0.115}{-2.51}}\hspace{2.75pt}}%
+	{\hspace{2.75pt}\mathbin{\yesminus{0.112}{0.115}{-2.51}}\hspace{2.75pt}}%
+	{\hspace{0.55pt}\mathbin{\yesminus{0.085}{0.100}{-1.75}}\hspace{0.55pt}}%
+	{\hspace{0.55pt}\mathbin{\yesminus{0.070}{0.085}{-1.25}}\hspace{0.55pt}}%
+}}
+% \DeclareMathOperator{\bigskewsum}{\scalerel*{\skewsum}{\sum}}
+\newcommand{\bigskewsum}{{\mathchoice%
+	{\hspace{2.20pt}\mathbin{\yesminus{0.230}{0.300}{-2.50}}\hspace{2.20pt}}%
+	{\hspace{2.20pt}\mathbin{\yesminus{0.164}{0.250}{-2.51}}\hspace{2.20pt}}%
+	{\hspace{0.70pt}\mathbin{\yesminus{0.120}{0.210}{-1.75}}\hspace{0.70pt}}%
+	{\hspace{0.50pt}\mathbin{\yesminus{0.085}{0.170}{-1.25}}\hspace{0.55pt}}%
+}}
+
+%%%%%%%%%%%%%%% No Minuses %%%%%%%%%%%%%%
+\DeclareRobustCommand{\nominus}[3]{
+	\begin{tikzpicture}[every path/.style={line width = #2mm, line cap = round}, baseline=#3]
+		\pgftransformxscale{#1};
+		\pgftransformyscale{#1};
+		
+		\draw (-1, 0) -- (1,0);
+		\draw (-1,-1) -- (1,1);
+		
+		\draw (0,0) circle (1);
+	\end{tikzpicture}
+}
+\newcommand{\notskewsum}{\mathchoice
+	{\hspace{0.55pt}\mathbin{\nominus{0.112}{0.115}{-2.51}}\hspace{0.55pt}}%
+	{\hspace{0.55pt}\mathbin{\nominus{0.112}{0.115}{-2.51}}\hspace{0.55pt}}%
+	{\hspace{0.55pt}\mathbin{\nominus{0.085}{0.100}{-1.75}}\hspace{0.55pt}}%
+	{\hspace{0.55pt}\mathbin{\nominus{0.070}{0.085}{-1.25}}\hspace{0.55pt}}
+}
+% \DeclareMathOperator{\bignotskewsum}{\scalerel*{\notskewsum}{\sum}}
+\newcommand{\bignotskewsum}{{\mathchoice%
+	{\hspace{2.20pt}\mathbin{\nominus{0.230}{0.300}{-2.50}}\hspace{2.20pt}}%
+	{\hspace{2.20pt}\mathbin{\nominus{0.164}{0.250}{-2.51}}\hspace{2.20pt}}%
+	{\hspace{0.70pt}\mathbin{\nominus{0.120}{0.210}{-1.75}}\hspace{0.70pt}}%
+	{\hspace{0.50pt}\mathbin{\nominus{0.085}{0.170}{-1.25}}\hspace{0.55pt}}%
+}}

@@ -1,0 +1,52 @@
+\newcommand{\skyline}[1]{
+    \foreach [count=\col] \val in {#1} {
+        \foreach \y in {1,...,\val} {
+            \draw[thick, line cap = round] (\col, \y) rectangle ++(1,1);
+        }
+    }
+}
+
+\newcommand{\skylinelabeled}[1]{
+    \foreach [count=\col] \val in {#1} {
+        \foreach \y in {1,...,\val} {
+            \draw[thick, line cap = round] (\col, \y) rectangle ++(1,1);
+        }
+        \node at ({\col+0.5}, 0) {$\val$};
+    }
+}
+
+\newcommand{\skylinefilled}[1]{
+    \foreach [count=\col] \val in {#1} {
+        \ifthenelse{\equal{\val}{0}}{}{
+            \foreach \y in {1,...,\val} {
+                \draw[fill=gray!50, thick, line cap = round] (\col, \y) rectangle ++(1,1);
+            }
+        }
+    }
+}
+\newcommand{\skylinefilledunderlines}[1]{
+    \foreach [count=\col] \val in {#1} {
+        \ifthenelse{\equal{\val}{0}}{}{
+            \foreach \y in {1,...,\val} {
+                \draw[fill=gray!50, thick, line cap = round] (\col, \y) rectangle ++(1,1);
+            }
+            \draw[shorten <= 2pt, shorten >= 2pt] (\col, -0.55) -- ++(1,0);
+        }
+    }
+}
+
+\newcommand{\ferrers}[1]{
+    \foreach [count=\row] \val in {#1} {
+        \foreach \x in {1,...,\val} {
+            \draw[thick, line cap = round] (\x, -\row) rectangle ++(1,1);
+        }
+    }
+}
+
+\newcommand{\ferrersfilled}[1]{
+    \foreach [count=\row] \val in {#1} {
+        \foreach \x in {1,...,\val} {
+            \draw[fill=gray!50, thick, line cap = round] (\x, -\row) rectangle ++(1,1);
+        }
+    }
+}

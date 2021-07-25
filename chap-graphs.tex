@@ -1,0 +1,508 @@
+\chapter{Graphs} 
+\label{chap-graphs}
+
+In this chapter, we consider the problem of universality for simple undirected graphs without loops. Given a graph $G$, we denote its vertex set by $V(G)$ and its edge set by $E(G)$. We call the number of vertices of $G$ its \emph{size}, denoted $\size{G}$, and denote its number of edges by $e(G)$. For a set $S$ of vertices of $G$, the \emph{subgraph of $G$ induced by $S$} is the graph on vertex set $S$ containing each edge in $E(G)$ in which both endpoints lie in $S$. We consider graphs up to isomorphism, where two graphs $G$ and $H$ are isomorphic if there is a bijection $\varphi: V(G) \to V(H)$ such that $u$ is adjacent to $v$ in $G$ if and only if $\varphi(u)$ is adjacent to $\varphi(v)$ in $H$ for all $u, v \in V(G)$. Finally, we say that a graph $G$ \emph{contains} another graph $H$ if there is some set $S$ of vertices of $G$ that induces the graph $H$ in $G$, and otherwise we say that $G$ is $H$-free.
+
+In~\cite{rado:universal-graph:}, Rado introduced the concept of a \emph{universal} graph, which he defined as a countably infinite graph that contained all finite graphs as induced subgraphs. Building on this idea, Moon~\cite{moon:on-minimal-n-un:} defined a graph to be $m$-universal if it contained all graps on $m$ finite graphs that contain all finite graphs on $m$ vertices. Moon observed that there are at least $2^{\binom{m}{2}}/m!$ graphs on $m$ vertices, as there are $2^{\binom{m}{2}}$ labeled graphs on $m$ vertices and at most $m!$ of these correspond to each unlabeled graph. Thus, any $m$-universal graph of size $n$ must have at least $2^{\binom{m}{2}}/m!$ subsets of size $m$, so
+\[
+	\binom{n}{m}
+	\ge
+	\dfrac{2^{\binom{m}{2}}}{m!}
+	.
+\]
+Using the inequality $\binom{n}{m} \le n^m/m!$, it follows that $n \ge 2^{(m-1)/2}$. Moreover, Moon constructed an $m$-universal graph $\gamma(m)$, where the size of $\gamma(m)$ is given by
+\[
+	\size{\gamma(m)}
+	\le
+	\begin{cases}
+		m \cdot 2^{(m-1)/2}                       & \text{if $m$ is odd,} \\
+		\dfrac{3}{2\sqrt{2}}\ m \cdot 2^{(m-1)/2} & \text{if $m$ is even}
+	\end{cases}
+\]
+
+Building on decades of intermediate results, Alon~\cite{alon:asymptotically-:} proved that the smallest $m$-universal graphs have size asymptotic to $2^{(m-1)/2}$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Proper Classes of Graphs}
+\label{sec-graphs-proper}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In the remainder of this chapter, we examine the problem of universality for proper classes of graphs. Before proceeding, we introduce some definitions that will prove necessary. A \emph{clique} is a graph with all possible edges. Given graphs $G$ and $H$, the \emph{complement} of $G$, denoted co-$G$, is the graph on the same vertex set that contains precisely those edges that are not present in $G$. The \emph{union} of $G$ and $H$, denoted $G \union H$, is the graph whose vertex set is the disjoint union of the vertex sets of $G$ and $H$ and whose edge set consists of all the edges from both $G$ and $H$. Similarly, the \emph{join} of $G$ and $H$, denoted $G \join H$, is the graph whose vertex set is the disjoint union of the vertex sets of $G$ and $H$ and whose edge set consists of all the edges from both $G$ and $H$ as well as every edge connecting a vertex from $G$ to a vertex from $H$.
+
+In~\cite{alstrup:small-induced-universal:}, Alstrup and Rauhe present a simple  argument lower bounding the size of a universal graph for any set of graphs.
+\begin{observation}[Alstrup and Rauhe~\cite{alstrup:small-induced-universal:}]
+\label{obs-alstrup-rauhe}
+	For any set of graphs $\G$, the size of a $\G_m$-universal graph must be at least $\dfrac{m}{e} \size{\G_m}^{\nicefrac{1}{m}}$.
+\end{observation}
+\begin{proof}
+	Let $H$ be a $\G_m$-universal graph, with our aim being to show that $\size{H} \ge \frac{m}{e} \size{\G_m}^{\nicefrac{1}{m}}$. The number of induced subgraphs of size $m$ in $G$ is bounded below by $\binom{\size{H}}{m}$, as each subgraph of $H$ of size $m$ corresponds to at least one subset of $m$ vertices of $H$, and thus $\binom{\size{H}}{m} \ge \size{\G_m}$. As $\left(\frac{e \cdot \size{H}}{m}\right)^m \ge \binom{\size{H}}{m}$, we have $\size{H} \ge \frac{m}{e} \size{\G_m}^{\nicefrac{1}{m}}$, as desired.
+\end{proof}
+
+In~\cite{lozin:minimal-univers:}, Lozin and Rudolf define a sense of optimality for universal graphs, which we now present. To this end, they begin with the same observation of Alstrup and Rauhe above, noting that if $\G$ is a class of graphs and $H$ is a $\G_m$-universal graph, then we must have 
+\[	
+	\size{\G_m}
+	\le
+    \binom{\size{H}}{m}   
+\]
+as each graph in $\G_m$ must correspond to at least one subset of $m$ vertices of $G$. As $\binom{\size{H}}{m} \le \size{H}^m$, we have
+\[
+	\size{\G_m}
+	\le
+	\size{H}^m.
+\]
+This inequality, together with $\size{H} \ge m$, which is true if $\G$ is infinite and thus each $\G_m$ is nonempty, gives the pair of inequalities
+\begin{align*}
+	\log\size{\G_m} 
+		&\le m \log \size{H} \\[5pt]
+	m \log m 
+		&\le m \log \size{H}.
+\end{align*}
+Finally, we say that a sequence of graphs $H_m$ that are $\G_m$-universal is \emph{asymptotically optimal} if
+\[
+	\lim_{m \to \infty}
+	\dfrac{m \log \size{H_m}}{\max\{\log \size{\G_m}, m \log m\}}
+	=
+	1
+\]
+and \emph{optimal in order} (\emph{order-optimal}) if there is a constant $c$ such that for any $m \ge 1$,
+\[
+	\dfrac{m \log \size{H_m}}{\max\{\log \size{\G_m}, m \log m\}}
+	\le 
+	c.
+\]
+
+In~\cite{kannan:implicit-representation-1992:}, Kannan, Naor, and Rudich ask if every graph class $\G$ with $\log\size{\G_m} = \oO{m \log m}$ admits universal graphs of polynomial size. Spinrad~\cite{spinrad:efficient-graph:} called the (unproven) affirmation to this question the \emph{implicit graph conjecture} and provided a generalization to classes of all sizes:
+%
+\newtheorem*{gen-implicit}{Generalized implicit graph conjecture}%
+\begin{gen-implicit}
+	For every graph class $\G$, there are $\G_m$-universal graphs $H_m$ with $\log\size{H_m} = \oO{\log\size{\G_m}/m}$.
+\end{gen-implicit}
+
+In the language of Lozin and Rudolf above, the generalized implicit graph conjecture may be restated:
+\newtheorem*{gen-implicit-equiv}{Generalized implicit graph conjecture (equivalent)}
+\begin{gen-implicit-equiv}
+	Every graph class admits an order-optimal sequence of universal graphs.
+\end{gen-implicit-equiv}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Cluster Graphs}
+\label{subsec-graphs-cluster}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Let $\C$ be the class of \emph{cluster} graphs, which are precisely those graphs that are disjoint unions of cliques. Equivalently, $\C$ is the class of $P_3$-free graphs. We begin by noting that $\C$ is isomorphic to the poset of integer partitions. This means that the unique smallest universal partition constructed in Theorem~\ref{thm-ptn-universal} translates to a smallest proper universal graph for $\C$ of the same size:
+\begin{proposition}
+\label{prop-graph-cluster-proper}
+For all integers $m \ge 0$, the smallest proper $\C_m$-universal graphs have size 
+\[
+	\u_{\C}^p(m)
+	=
+	\phi(m)
+	=
+	\floor{\dfrac{m}{1}} + \floor{\dfrac{m}{2}} + \cdots + \floor{\dfrac{m}{m}}.
+\]
+\end{proposition}
+
+We will show that no smaller $\C_m$-universal graph may be found by searching outside the class by showing that any graph may be transformed into a cluster graph of the same size without losing any of its contained cluster graphs.
+
+\begin{proposition}
+\label{prop-clusterize}
+	Given any graph $G$ of size $n$, there is a cluster graph of size $n$ that contains every cluster graph contained in $G$.
+\end{proposition}
+\begin{proof}
+	Let $S \subseteq V(G)$ be a set of vertices that induce a clique of maximum size in $G$, and let $H$ be the graph formed from $G$ by deleting each edge in which precisely one endpoint lies in $S$. We claim that $H$ contains every cluster graph contained in $G$. Let $g$ be a cluster graph contained in $G$, and fix some embedding $\iota$ of $g$ into $G$. Note that at most one clique of $g$ uses vertices of $S$ in $G$. If (the fixed embedding of) $g$ uses no vertices of $S$, then the same $\iota$ may be used to embed $g$ into $H$. Otherwise, whichever clique of $g$ uses vertices of $S$ may be embedded \emph{entirely} within $S$ in $G$. Let $\iota'$ be this embedding. Then $\iota'$ may be used to embed $g$ into $H$ as well, and thus $H$ contains each cluster graph contained in $G$. 
+	
+	By induction, we can transform the graph $H_1$ induced by remaining vertices $V(H) \setminus S$ into a cluster graph $C_1$ while retaining each of the cluster graphs contained in $H_1$. The union of $C_1$ with the clique $S$ is thus a cluster graph that contains each cluster graph that $G$ does, completing the proof.
+\end{proof}
+
+In particular, Proposition~\ref{prop-clusterize} implies that any $\C_m$-universal graph may be transformed into a proper $\C_m$-universal graph of the same size.
+\begin{corollary}
+\label{cor-graph-cluster-improper}
+For all integers $m \ge 0$, the smallest $\C_m$-universal graphs have size
+\[
+	\u_{\C}(m)
+	=
+	\phi(m)
+	=
+	\floor{\dfrac{m}{1}} + \floor{\dfrac{m}{2}} + \cdots + \floor{\dfrac{m}{m}}.
+\]
+\end{corollary}
+
+The number of cluster graphs of size $n$ is equal to the number of partitions of size $n$, and thus $\size{\C_n} \sim \dfrac{1}{4n\sqrt{3}} \exp(\pi \sqrt{2n/3})$ by a result of Hardy and Ramanujan~\cite{hardy:asymptotic-formulae:}. From this, it follows that the unique sequence of smallest proper $\C_m$-universal graphs of size $\phi(m) \sim m \log m$ is asymptotically optimal. 
+
+Proposition~\ref{prop-clusterize} also implies two linear lower bounds on the size of universal graphs for classes that contain certain disjoint unions of cliques:
+\begin{corollary}
+\label{cor-graph-lower-big-cliques}
+	If the graph $G$ contains $k K_{\floor{m/k}}$ for $1 \le k \le \ell$, then
+	\[
+		\size{G}
+		\ge
+		\floor{\dfrac{m}{1}} + \floor{\dfrac{m}{2}} + \cdots + \floor{\dfrac{m}{\ell}}.
+	\]
+\end{corollary}
+\begin{proof}
+	Suppose that the graph $G$ contains the graph $\floor{\frac{m}{k}} K_{k}$ for $1 \le k \le \ell$. By Proposition~\ref{prop-clusterize}, we may assume that $G$ is a cluster graph. As the poset of cluster graphs is isomorphic to the poset of integer partitions, it suffices to show that if $p = p(1) \cdots p(t)$ is a partition that contains $\floor{\frac{m}{k}}^k$ for all $1 \le k \le \ell$, then $\size{p} \ge \floor{m/1} + \floor{m/2} + \cdots + \floor{m/\ell}$. For each $k$, the fact that $p$ contains $\floor{\frac{m}{k}}^k$ is equivalent to $p(k) \ge \floor{\frac{m}{k}}$, and thus
+	\begin{align*}
+		\size{p}
+			&= p(1) + p(2) + \cdots + p(n) \\
+			&\ge p(1) + p(2) + \cdots + p(\ell) \\
+			&\ge \floor{\dfrac{m}{1}} + \floor{\dfrac{m}{2}} + \cdots + \floor{\dfrac{m}{\ell}},
+	\end{align*}
+	as desired.
+\end{proof}
+
+\begin{corollary}
+	\label{cor-graph-lower-many-cliques}
+	If the graph $G$ contains $\floor{\frac{m}{k}} K_{k}$ for $1 \le k \le \ell$, then
+	\[
+		\size{G}
+		\ge
+		\floor{\dfrac{m}{1}} + \floor{\dfrac{m}{2}} + \cdots + \floor{\dfrac{m}{\ell}}.
+	\]
+\end{corollary}
+\begin{proof}
+	Suppose that the graph $G$ contains the graph $\floor{\frac{m}{k}} K_{k}$ for $1 \le k \le \ell$. By Proposition~\ref{prop-clusterize}, we may assume that $G$ is a cluster graph. As the poset of cluster graphs is isomorphic to the poset of integer partitions, it suffices to show that if $p = p(1) \cdots p(t)$ is a partition that contains $k^{\floor{m/k}}$ for all $1 \le k \le \ell$, then $\size{p} \ge \floor{m/1} + \floor{m/2} + \cdots + \floor{m/\ell}$. 
+
+	For any partitions $q, r$, we have $q \le r$ if and only if $q^{\conj} \le r^{\conj}$. The conjugate of $k^{\floor{m/k}}$ is $\floor{\frac{m}{k}}^k$, so if $p^{\conj} = p'(1) p'(2) \cdots p'(s)$, then $p^{\conj}$ contains $\floor{\frac{m}{k}}^k$ for each $1 \le k \le \ell$, and thus $p'(k) \ge \floor{\frac{m}{k}}$ for each $1 \le k \le \ell$. Finally, we have
+	\begin{align*}
+		\size{p}
+			&= \size{p^{\conj}} \\
+			&= p'(1) + p'(2) + \cdots + p'(n) \\
+			&\ge p'(1) + p'(2) + \cdots + p'(\ell) \\
+			&\ge \floor{\dfrac{m}{1}} + \floor{\dfrac{m}{2}} + \cdots + \floor{\dfrac{m}{\ell}},
+	\end{align*}
+	as desired.
+\end{proof}
+
+In the case that $\ell = 2$, Corollary~\ref{cor-graph-lower-many-cliques} shows that any graph that contains $m K_1$, $\floor{\frac{m}{2}} K_2$, and $\floor{\frac{m}{3}} K_3$ has size at least $m + \floor{\frac{m}{2}} + \floor{\frac{m}{3}}$, improving upon and generalizing the following result, which appears in~\cite{esperet:on-induced-universal:}.
+
+\begin{claim}[{Esperet, Labourel, and Ochem~\cite[Claim 1]{esperet:on-induced-universal:}}]
+\label{claim-max-degree-2}
+	Let $\F$ denote the class of graphs with maximum degree $2$. Every $\F_m$-universal graph has size at least $11\floor{m/6}$.
+\end{claim}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Bipartite Permutation Graphs}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Let $\G$ be the class of bipartite permutation graphs. Then $\G$ is the collection of $\{S_{2,2,2}, \text{Sun}_{3}, \Phi, C_3, C_5, C_6, \cdots\}$-free graphs, where the graphs $S_{2,2,2}$, $\text{Sun}_{3}$, and $\Phi$ are drawn in Figure~\ref{fig-graphs-bipartite-perm}.
+\begin{figure}[ht]
+\captionsetup{justification=centering}
+\setlength{\tabcolsep}{12pt}
+	\begin{tabular}{ccc}
+		\begin{tikzpicture}[graphs, scale = {2/3}]
+			\node (vCenter) at (0, 0) {};
+			\foreach \theta in {90, 210, 330} {
+				\node (vInner\theta) at (\theta:1) {};
+				\node (vOuter\theta) at (\theta:2) {};
+				\draw (vCenter) -- (vInner\theta) -- (vOuter\theta);
+			}
+		\end{tikzpicture}
+		&
+		\begin{tikzpicture}[graphs, scale = {2/3}]
+			\foreach \theta in {0, 90, 180} {
+				\node (vInner\theta) at (\theta:1) {};
+				\node (vOuter\theta) at (\theta:2) {};
+				\draw (vInner\theta) -- (vOuter\theta);
+			}
+			\node (vInner270) at (270:1) {};
+			\draw (vInner0) -- (vInner90) -- (vInner180) -- (vInner270) -- (vInner0);
+		\end{tikzpicture}
+		&
+		\begin{tikzpicture}[graphs]
+			\node (SE) at ( 1,-1) {};
+			\node (S)  at ( 0,-1) {};
+			\node (SW) at (-1,-1) {};
+
+			\node (W)  at (-1, 0) {};
+			\node (O)  at ( 0, 0) {};
+			\node (E)  at ( 1, 0) {};
+
+			\node (N)  at ( 0, 1) {};
+			
+			\draw (N) -- (O) -- (E) -- (SE) -- (S) -- (SW) -- (W) -- (O) -- (S);
+		\end{tikzpicture}
+		\\
+		$S_{2,2,2}$ & $\text{Sun}_{3}$ & $\Phi$
+	\end{tabular}
+\caption{The graphs that, in addition to the cycles $\{C_3, C_5, C_6, \dots\}$, comprise the set of minimal forbidden subgraphs of the class of bipartite permutation graphs.}
+\label{fig-graphs-bipartite-perm}
+\end{figure}
+In~\cite{lozin:minimal-univers:}, Lozin and Rudolf explicitly construct a proper $\G_m$-universal of size $m^2$. It is well known that $\log\size{\G_m} \sim \frac{m}{2} \log m$\footnote{The number of bipartite permutation graphs of size $n$ is sequence \OEISlink{A000085} in the OEIS~\cite{sloane:the-on-line-enc:}.}, so their construction is order-optimal. The proper $\G_5$-universal graph of their construction is drawn in Figure~\ref{fig-graphs-bipartite-perm-univ}.
+
+\begin{figure}[ht]
+\captionsetup{justification=centering}
+	\begin{tikzpicture}[
+		scale=1.5, 
+		every node/.style={circle,fill=black,inner sep=0pt,minimum size=4pt}
+	]
+		\foreach \y in {0,1,...,4} {
+			\pgfmathtruncatemacro\yminus{\y - 1};
+			\foreach \x in {0,1,...,4} {
+				\node (v\x\y) at (\x, \y) {};
+				\ifthenelse{\equal{\y}{0}}{}{
+					\foreach \z in {0,...,\x} {
+						\draw (v\z\yminus.center) -- (v\x\y.center);
+					}
+				}
+			}
+		}
+	\end{tikzpicture}
+\caption{The $\G_5$-universal graph constructued of Lozin and Rudolf's construction~\cite{lozin:minimal-univers:}.}
+\label{fig-graphs-bipartite-perm-univ}
+\end{figure}
+
+In~\cite{alecu:critical-properties:}, Alecu, Lozin, and Malyshev prove that every proper $\G_m$-universal graph has $\oOmega{m^\alpha}$ vertices for all $\alpha < 2$. Moreover, they conjecture that the minimum size of a proper $\G_m$-universal graph is $\oOmega{m^2}$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Caterpillar Forests}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+A \emph{tree} is a connected acyclic graph, and a \emph{forest} is a disjoint union of trees, ie. an acyclic graph. A \emph{leaf} is a vertex of degree $1$. A connected graph is called a \emph{caterpillar} if its set of non-leaf vertices vertices induces a path. Every caterpillar is a tree, and a disjoint union of caterpillar graphs is called a \emph{cateprillar forest}. Let $\G$ be the class of caterpillar forests, or equivalently, the class of acyclic $S_{2,2,2}$-free graphs, where the graph $S_{2,2,2}$ is drawn in Figure~\ref{fig-graphs-bipartite-perm}.
+
+In~\cite{bonichon:short-labels:}, Bonichon, Gavoille, and Labourel construct graphs on at most $64m$ vertices that contain all caterpillars of size $m$. There are precisely $2^{m-4} + 2^{\floor{(m-4)/2}}$ caterpillars of size $m$, so their construction is asymptotically optimal.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Linear Forests}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Let $\G$ be the class of graphs that are disjoint unions of paths. Equivalently, $\G$ is the the set of acyclic $K_{1,3}$-free graphs. In~\cite{abrahamsen:near-optimal-induced-1:}, Abrahamsen, Alstrup, Holm, Knudsen, and St\"ockel construct a $\G_m$-universal graph of size $\floor{3m/2}$, which they note is best-possible by extracting a lower bound of $\floor{3m/2}$ from the proof of Claim~\ref{claim-max-degree-2} in \cite{esperet:on-induced-universal:}. Alternatively, this same lower bound is implied by Corollary~\ref{cor-graph-lower-many-cliques}, as any $\G_m$-universal graphs contains both $m K_1$ and $\floor{\frac{m}{2}} K_2$.
+
+\begin{figure}[ht]
+\captionsetup{justification=centering, margin=1in}
+\begin{tikzpicture}[scale = 1, graphs]
+	\foreach \x in {0, 1, ..., 9} {
+		\node (v\x1) at (\x, 1) {};
+		\ifthenelse{\equal{\x}{0}}{}{
+			\pgfmathtruncatemacro{\xminus}{\x - 1}
+			\draw (v\xminus1) -- (v\x1);
+		}
+	}
+	\foreach \x in {0, 1, ..., 4} {
+		\pgfmathtruncatemacro{\twox}{2 * \x}
+		\node (v\x0) at (\twox, 0) {};
+		\draw (v\x0) -- (v\twox1);
+	}
+\end{tikzpicture}
+\caption{The $\G_{10}$-universal graph of size $15$ of Abrahamsen, Alstrup, Holm, Knudsen, and St\"ockel's construction~\cite{abrahamsen:near-optimal-induced-1:}.}
+\end{figure}
+
+Linear forests of size $n$ are in bijection with partitions of size $n$, and thus $\size{\G_n} \sim \dfrac{1}{4n\sqrt{3}} \exp(\pi \sqrt{2n/3})$ by a result of Hardy and Ramanujan~\cite{hardy:asymptotic-formulae:}. From this, it follows that the sequence of $\G_m$-universal graphs constructed by Abrahamsen, Alstrup, Holm, Knudsen, and St\"ockel is asymptotically optimal. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Star Forests}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We call complete bipartite graphs of the form $K_{1,n}$ \emph{star} graphs or just \emph{stars}. Disjoint unions of star graphs are called \emph{star forests}. Let $\SF$ be the class of star forests. Equivalently, $\SF$ is the collection of acyclic $P_4$-free graphs. 
+
+In~\cite{alecu:critical-properties:}, Alecu, Lozin, and Malyshev show that the minimum size of an $\SF_m$-universal bipartite permutation graph is $\oTheta{m \log m}$. This implies that a proper $\SF_m$-universal graph must have size $\oOmega{m \log m}$ and that any $\SF_m$-universal graph must have size $\oO{m \log m}$. As the set of star forests of size $n$ is in bijection with the set of partitions of size $n$, we have that $\size{\SF_n} \sim \dfrac{1}{4n\sqrt{3}} \exp(\pi \sqrt{2n/3})$, and thus the graphs constructed by Alecu, Lozin, and Malyshev are asymptotically optimal.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Threshold Graphs}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+A \emph{threshold graph} is a graph that may be constructed from the empty graph through a sequence of unions and joins with a single vertex. Threshold graphs have been widely studied, so much so that they serve as the subject of a 2003 book~\cite{mahadev:threshold-graph:} by Spinrad. Let $\T$ denote the class of non-empty threshold graphs. Below, we show that $\T$ is isomorphic to the poset of words over a two-letter alphabet, discussed in generality in Section~\ref{sec-words}.
+
+\begin{proposition}
+\label{prop-graph-threshold-isomorphism}
+	Define the map $\gamma: \{\textsf{u}, \textsf{j}\}^\ast \to \T$ recusively as follows:
+	\begin{enumerate}
+		\item $G(\varepsilon) = g$ is the graph on one vertex.
+		\item $G(v\textsf{u}) = G(v) \union g$ is the union of $G(v)$ with a vertex.
+		\item $G(v\textsf{j}) = G(v) \join  g$ is the  join of $G(v)$ with a vertex.
+	\end{enumerate}
+	Then $\gamma$ is a poset isomorphism. 
+\end{proposition}
+The map $\gamma$ sends words of size $m$ to graphs of size $m+1$, so we omit the $0$-vertex graph from $\T$. Before proving Proposition~\ref{prop-graph-threshold-isomorphism}, we present a useful lemma.
+\begin{lemma}
+\label{lemma-graph-union}
+	If $G$ and $H$ are graphs and $g$ is the one-vertex graph, then 
+	\begin{enumerate}
+		\item $G \union g \le H \union g$ if and only if $G \le H$.
+		\item $G \union g \le H \join  g$ if and only if $G \union g \le H$.
+		\item $G \join  g \le H \union g$ if and only if $G \join  g \le H$.
+		\item $G \join  g \le H \join  g$ if and only if $G \le H$.
+	\end{enumerate}
+\end{lemma}
+
+We now present the proof of Proposition~\ref{prop-graph-threshold-isomorphism}.
+
+\newenvironment{proof-of-prop-graph-threshold-isomorphism}{%
+	\medskip\noindent {\it Proof of Proposition~\ref{prop-graph-threshold-isomorphism}.\/}%
+}{%
+	\qed\bigskip%
+}
+\begin{proof-of-prop-graph-threshold-isomorphism}
+	We begin by proving that if $v, w \in \{\textsf{u}, \textsf{j}\}^\ast$ with $v \le w$, then $\gamma(v) \le \gamma(w)$.
+
+	Leveraging the recursive nature of the map $\gamma$, we proceed by induction on the size $v$. As a base case, observe that $\gamma(\varepsilon)$ is the one-vertex graph, which is contained in every non-empty graph. Thus, assume that $v$ is a non-empty word, let the final letter of $v$ be $\ell$, and write $v = v_0 \ell$. Let $w \in \{u, j\}^\ast$ be any word with $v \le w$. As $v$ is a subsequence of $w$, we may write $w = w_0 \ell w_1$, where $v_0 \le w_0$. By induction, we have $\gamma(v_0) \le \gamma(w_0)$. By Lemma~\ref{lemma-graph-union}, we have $\gamma(v_0\ell) \le \gamma(w_0\ell)$ no matter the value of $\ell$. Finally, as $\gamma(w_0\ell) \le \gamma(w_0\ell w_1)$, so
+	\[
+		\gamma(v_0\ell) 
+		\le 
+		\gamma(w_0 \ell w_1),
+	\]
+	as desired.
+
+	For the converse, we aim to show that if $\gamma(v)$ and $\gamma(w)$ are graphs with $\gamma(v) \le \gamma(w)$, then $v \le w$. Again, we proceed by induction on the size of $\gamma(v)$ and begin by noting that the one-vertex graph $\gamma(\varepsilon)$ is contained in every graph in $\T$, and the empty word $\varepsilon$ is contained in every word in $\{u, j\}^\ast$, so the base case is satisfied. 
+
+	Let $\gamma(v)$ and $\gamma(w)$ be graphs with $\gamma(v) \le \gamma(w)$ and $\size{\gamma(v)} \ge 2$, or equivalently, $\size{v} \ge 1$. Without loss of generality, assume that $v = v_0 u$ and $w = w_0 u j^k$ for some $k \ge 0$. By repeated applications of Lemma~\ref{lemma-graph-union}, the containment $\gamma(v_0 u) \le \gamma(w_0 u j^k)$ is equivalent to $\gamma(v_0) \le \gamma(w_0)$, and by induction we have $v_0 \le w_0$, and thus $v_0 u \le w_0 u j^k$, completing the proof.
+\end{proof-of-prop-graph-threshold-isomorphism}
+
+One consequence of this isomorphism is that the smallest universal words constructed in Proposition~\ref{prop-word-universal} translate into smallest proper universal threshold graphs of size $2m-1$. Proper $\T_m$-universal graphs of this size were first constructed by Hammer and Kelmans in~\cite{hammer:on-universal-th:}.
+\begin{corollary}[Hammer \& Kelmans~\cite{hammer:on-universal-th:}]
+\label{cor-graphs-threshold-proper}
+	The smallest proper $\T_m$-universal graphs have size $2m-1$.
+\end{corollary}
+
+Any $\T_m$-universal graph contains both a clique and a co-clique of size $m$, and these subgraphs must not intersect in more than one vertex. Thus any $\T_m$-universal graph must contain at least $2m-1$ vertices, meaning the smallest proper $\T_m$-universal graphs derived from Proposition~\ref{prop-word-universal} are smallest $\T_m$-universal graphs as well:
+\begin{corollary}[Hammer \& Kelmans~\cite{hammer:on-universal-th:}]
+\label{cor-graphs-threshold-improper}
+	The smallest (proper) $\T_m$-universal graphs have size $2m-1$.
+\end{corollary}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Split Permutation Graphs}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+A \emph{split graph} is a graph whose vertex set may be partitioned into a clique and a co-clique. Let $\G$ be the class of split permutation graphs. Equivalently, $\G$ is also the class of $\{2K_2, C_4, C_5, \text{net}, \text{co-net}, \text{rising sun}, \text{co-rising sun}\}$-free graphs, where the net and rising sun graphs as well as their complements, the co-net and co-rising sun graphs, are drawn in Figure~\ref{fig-graphs-split}.
+\begin{figure}[ht]
+\captionsetup{justification=centering}
+\setlength{\tabcolsep}{12pt}
+	\begin{tabular}{cccc}
+		\begin{tikzpicture}[graphs, scale = 0.577350] % 1 / sqrt(3)
+			\foreach \theta in {90, 210, 330} {
+				\node (vInner\theta) at (\theta:1) {};
+				\node (vOuter\theta) at (\theta:2) {};
+				\draw (vInner\theta) -- (vOuter\theta);
+			}
+			\draw (vInner90) -- (vInner210) -- (vInner330) -- (vInner90);
+			
+			% \node[fill=none] at (0, -1) {net};
+		\end{tikzpicture}
+		&
+		\begin{tikzpicture}[graphs, scale = 0.577350]
+			\foreach \theta in {30, 150, 270} {
+				\node (vInner\theta) at (\theta:1) {}; % 1/sqrt(3)
+			}
+			\foreach \theta in {90, 210, 330} {
+				\node (vOuter\theta) at (\theta:2) {}; % 2/sqrt(3)
+			}
+
+			\draw (vInner30) -- (vInner150) -- (vInner270) -- (vInner30);
+			\draw (vOuter90) 
+				-- (vInner150) -- (vOuter210) 
+				-- (vInner270) -- (vOuter330) 
+				-- (vInner30)  -- (vOuter90);
+			
+			% \node[fill=none] at (0, -1) {co-net};
+		\end{tikzpicture}
+		&
+		\begin{tikzpicture}[graphs, scale = 0.816497] % sqrt(2/3)
+			\foreach \theta in {45, 135, 225, 315} {
+				\node (vInner\theta) at (\theta:1) {};
+			}
+			\foreach \theta in {0, 90, 180} {
+				\node (vOuter\theta) at (\theta:1.414214) {}; % sqrt(2)
+			}
+
+			% "Outer" edges
+			\draw  (vInner315) -- (vOuter0)   
+				-- (vInner45)  -- (vOuter90)  
+				-- (vInner135) -- (vOuter180) 
+				-- (vInner225);
+			\draw (vInner225) -- (vInner315);
+
+			% "Inner" edges
+			\draw (vInner45) -- (vInner135) -- (vInner225) -- (vInner315) -- (vInner45) -- (vInner225);
+			\draw (vInner135) -- (vInner315);
+			
+			% \node[fill=none] at (0, -1) {rising sun};
+		\end{tikzpicture}
+		&
+		\begin{tikzpicture}[graphs]
+			\node (vCenter) at (0,0) {};
+
+			\foreach \theta in {0, 60, 120, 180} {
+				\node (vInner\theta) at (\theta:1) {};
+			}
+
+			\foreach \theta in {60, 120} {
+				\node (vOuter\theta) at (\theta:2) {};
+			}
+
+			% Left triangle
+			\draw (vCenter) -- (vInner0)   -- (vInner60)  -- (vCenter);
+			% Right triangle
+			\draw (vCenter) -- (vInner120) -- (vInner180) -- (vCenter);
+
+			% Uppers
+			\draw (vOuter120)  -- (vInner120)  -- (vInner60) -- (vOuter60);
+			
+			% \node[fill=none] at (0, -1) {co-risinsg sun};
+		\end{tikzpicture}
+		\\
+		net & co-net & rising sun & co-rising sun
+	\end{tabular}
+\caption{The forbidden subgraphs for the class of split permutation graphs.}
+\label{fig-graphs-split}
+\end{figure}
+In~\cite{Atminas:Universal-graph:}, Atminas, Kitaev, Lozin, and Valyuzhenich construct a proper $\G_m$-universal graph of size $4m^3$, and in~\cite{brignall:bichain-graphs:}, Brignall, Lozin, and Stacho construct a $\G_m$-universal graph of size $m^2$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Concluding Remarks}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Just two years after Moon introduced $m$-universal graphs, Breur~\cite{breuer:coding-the:} introduced adjacency labeling schemes, which aim to efficiently encode the adjacencies of graphs. Informally, an adjacency labeling scheme for a graph $G$ is a labeling of the vertices so that the adjacency of any two vertices may be recovered by knowing only their labels. 
+
+More formally, a \emph{$b$-bit adjacency labeling scheme} for a family of graphs $\F$ is (1) an assignment of a length-$b$ bitstring to each vertex in each graph in $F$ and (2) some method so that, given two vertices $u, v$ of a graph $G$ in $F$, we can determine the adjacency between $u$ and $v$ in $G$ given only their labels\footnote{Some scholars insist that the algorithm that recovers the adjacency of $u$ and $v$ be computable in polynomial time, but we do not.}. More than three decades after universal graphs and adjacency labelings schemes were introduced, Kannan, Naor, and Rudich~\cite{kannan:implicit-representation-1988:} proved their equivalence: a family of graphs $F$ admits a $b$-bit labeling scheme if an only if there is an $F$-universal graph with $2^b$ vertices.
+
+To conclude, we would be remiss if we did not remark upon the substantial efforts to characterize $m$-universal graphs. We say that a set of vertices in a graph $G$ is \emph{homogenous} if it induces either a clique or a co-clique in $G$. The following sequence of results show that, with various interpretations, graphs that contain only small homogenous sets are universal.
+Let $\hom(G)$ denote the size of the largest homogenous subset of $G$, and define
+\[
+	\hom(n,m)
+	=
+	\min\{\hom(G) \st \text{$G$ of size $n$ not $m$-universal}\}
+\]
+Equivalently, $\hom(n,m)$ is the largest integer so that for all graphs $G$ on $n$ vertices, the inequality $\hom(G) < \hom(n,m)$ implies that $G$ is $m$-universal.
+
+In~\cite{erdos:on-spanned-subgraphs:}, Erd\H{o}s and Hajnal show that for all integers $m$, for all positive constants $c$, and for all $n$ sufficiently large, $\hom(n,m) \ge c \log(n)$. In~\cite{erdos:ramsey-type-the:}, they go on to improve this result, proving the following theorem.
+\begin{theorem}[Erd\H{o}s and Hajnal~\cite{erdos:ramsey-type-the:}]
+\label{thm-erdos-hajnal}
+	Let $m$ be a positive integer, and let $0 < c < 1/m$. There there is some $n_0 = n_0(m,c)$ such that for all $n > n_0$, we have 
+	\[
+		\hom(n,m) \ge e^{c\sqrt{\log n}/2}.	
+	\]
+\end{theorem}
+
+In~\cite{promel:non-ramsey-graphs:}, Pr\"{o}mel and R\"{o}dl allowed the ``level'' of universality to vary with the size of the graph, proving the following.
+\begin{theorem}[Pr\"{o}mel and R\"{o}dl~\cite{promel:non-ramsey-graphs:}]
+\label{thm-promel-rodl}
+For any $c_1 > 0$, there is some $c_2 > 0$ such that for all $n$, we have
+\[
+	\hom(n,c_2 \log n) \ge c_1 \log n.
+\]
+\end{theorem}
+In~\cite{fox:induced-Ramsey-type:}, Fox and Sudakov generalize Theorem~\ref{thm-promel-rodl}:
+\begin{theorem}[Fox and Sudakov~\cite{fox:induced-Ramsey-type:}]
+\label{thm-fox-sudakov}
+There are constants $c_1, c_2 > 1$ such that for all $n$, $m$, we have 
+\[
+	\hom(n,m) \ge c_1 2^{c_2 \sqrt{\frac{\log n}{m}}} \log n.
+\]
+\end{theorem}
+
+Another structural description of $m$-universal graphs came in~\cite{chung:on-graphs-not:}, wherein Chung and Graham give alternative sufficient conditions for a graph to be $m$-universal:
+\begin{theorem}[Chung and Graham~~\cite{chung:on-graphs-not:}]
+\label{thm-chung-universal}
+Let $m$ be a positive integer. If the graph $G$ of size $n$ is not $m$-universal, then there is some induced subgraph $H \subseteq G$ of size $\floor{n/2}$ so that
+\[
+	\size{e(H) - \frac{n^2}{16}}
+	> 
+	2^{-2(m^2+27)}n^2.
+\]
+\end{theorem}
+Restated, Theorem~\ref{thm-chung-universal} says that graphs that are not universal must contain a subgraph that has an edge density that strongly deviates from what is ``typical''. Let $D(n, m)$ denote the largest integer such that every graph $G$ on $n$ vertices that is not $m$-universal contains a subgraph $H$ of size $\floor{n/2}$ with $\size{e(H)-\frac{1}{16}n^2} > D(n, m)$. The above result shows that $D(n, m) \ge 2^{-2(m^2+27)}n^2$ for sufficiently large $n$. In \cite{fox:induced-Ramsey-type:}, Fox and Sudakov use Theorem~\ref{thm-fox-sudakov} to show the following result.
+\begin{proposition}
+\label{prop-fox-sudakov-d}
+There are constants $c_3, c_4 > 1$ such that $c_3^{-m}n^2 < D(n,m) < c_4^{-m}n^2$ for all positive integers $n, m$.
+\end{proposition}

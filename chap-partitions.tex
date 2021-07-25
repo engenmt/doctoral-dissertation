@@ -1,0 +1,197 @@
+\chapter{Integer Partitions}
+\label{chap-partitions}
+
+An (integer) partition $p = p(1) \cdots p(n)$ is a weakly decreasing sequence of positive integers, which are called the \emph{parts} of $p$. The \emph{size} of a partition, denoted $\size{p}$, is the sum of its parts. For convenience, we say that for $i > n$ the $i\th$ part of $p$ is $0$ and write $p(i) = 0$. We say that a partition $p = p(1) \cdots p(m)$ is contained in another partition $q = q(1) \cdots q(n)$ if $p(i) \le q(i)$ for all $i$. This partial order on partitions is simply the one of Young's lattice, namely containment of Ferrers diagrams. The \emph{Ferrers diagram} of a partition $p = p(1) \cdots p(m)$ is a visual representation of $p$ consisting of an arrangement of $p(1)$ cells in the first (topmost) row, $p(2)$ cells in the second row, and so on. An example of partition containment displayed through Ferrers diagrams is presented in Figure~\ref{fig-ptn-ferrers}.
+
+\begin{figure}[ht]
+\captionsetup{justification=centering}
+	\begin{tikzpicture}[scale={1/3}]
+		\ferrers{3,1}
+		\node at (5.5,-1) {$\le$};
+
+		\begin{scope}[shift={(6,1)}]
+			\ferrers{4,2,1,1}
+			\ferrersfilled{3,1}
+		\end{scope}
+
+		\begin{scope}[shift={(5.5,-4)}]
+			\node at (-3,0) {$31$};
+			\node at ( 0,0) {$\le$};
+			\node at (3.5,0) {$4211$};
+		\end{scope}
+	\end{tikzpicture}
+\caption{An example partition containment presented by way of Ferrers diagrams.}
+\label{fig-ptn-ferrers}
+\end{figure}
+
+The \emph{conjugate} of a partition $p$ is the partition whose Ferrers diagram is the reflection of the Ferrers diagram of $p$ reflected along the anti-diagonal $y = -x$. An example of a partition and its conjugate is displayed in Figure~\ref{fig-ptn-conjugate}.
+\begin{figure}[ht]
+\captionsetup{justification=centering,margin=1in}
+	\begin{tikzpicture}[scale={1/3}]
+		\ferrers{6,3,3,2,1}
+		\draw[dashed, gray] (1,0) -- ++(3.5,-3.5);
+
+		\begin{scope}[shift={(9,0.5)}]
+			\ferrers{5,4,3,1,1,1}
+			\draw[dashed, gray] (1,0) -- ++(3.5,-3.5);
+		\end{scope}
+	\end{tikzpicture}
+\caption{The Ferrers diagram of a partition and its conjugate, both displayed with the anti-diagonal.}
+\label{fig-ptn-conjugate}
+\end{figure}
+
+Given a finite set of partitions $S$, the unique smallest partition that contains each partition in $S$ is the partition whose $i\th$ part is equal to the largest $i\th$ part among all members of $S$. 
+\begin{observation}
+\label{obs-ptn-join}
+	If $S$ is a finite set of partitions, then the smallest partition $p$ that is $S$-universal has $i\th$ part given by
+	\[
+		p(i) 
+		= 
+		\max\{q(i) \st q \in S\}.
+	\]
+\end{observation}
+Thus, to construct the smallest $m$-universal partition for the set of all partitions, one must only observe that the largest $i\th$ part among all partitions of size $m$ is $\floor{m/i}$, meaning the unique smallest $m$-universal partition has $i\th$ part equal to $\floor{m/i}$ for all $i$.
+
+\begin{theorem}
+\label{thm-ptn-universal}
+	The unique smallest $m$-universal partition has size
+	\[
+		\phi(m)
+		=
+		\floor{m/1} + \floor{m/2} + \cdots + \floor{m/m}
+		\footnote{The sequence $\phi$ appears as sequence \OEISlink{A006218} in the OEIS~\cite{sloane:the-on-line-enc:}}.
+	\]
+\end{theorem}
+Figure~\ref{fig-ptn-universal} displays the $24$-universal partition of size $\phi(24) = 84$. In~\cite{dirichlet:uber-die:}, Dirichlet shows that $\phi(m) = m(\log(m) + 2\gamma-1) + \Delta(m)$, where $\gamma \approx 0.5772$ is the Euler--Mascheroni constant and $\Delta(m) = \oO{\sqrt{m}}$, and thus $\phi(m) \sim m \log m$. The asymptotics of $\Delta(m)$ are the subject of the \emph{Dirichlet Divisor Problem}, which aims to find the smallest value $\theta$ so that $\Delta(m) = \oO{m^\theta}$. The best known bound is due to Huxley~\cite{huxley:exponential-sums-and:}, who showed that $\inf \theta \le 131/416 \approx 0.3149$. 
+
+\begin{figure}[ht]
+\captionsetup{justification=centering}
+	\begin{tikzpicture}[scale={24/120}]
+		\ferrers{24,12,8,6,4,4,3,3,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1}
+	\end{tikzpicture}
+\caption{The unique $24$-universal partition of size $\phi(24) = 84$.}
+\label{fig-ptn-universal}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Proper Classes of Partitions}
+\label{sec-ptn-classes}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In this section, we show that any proper class of partitions admits universal partitions of linear size. For reference, some known or computed values of minimum sizes for universal partitions for various classes are presented in Appendix~\ref{appendix-partitions}.
+
+We require one more definition to discuss proper classes of partitions. We say that an \emph{potentially infinite partition} $p$ is an infinite weakly decreasing sequence over the infinite ordered alphabet $\{0 < 1 < \cdots < \omega\}$, where $\omega$ represents an infinite part. If $p(n) = \ell > 0$ for each $n > N$, then we abbreviate $p$ as $p(1) \cdots p(N) \ell^\omega$, where $\ell^\omega$ representing an infinite number of parts equal to $\ell$. If $p(n) = 0$ for each $n > N$, then we abbreviate $p$ as $p(1) \cdots p(N)$. Infinite partitions give way to infinite Ferrers diagrams, and we say that the \emph{age} of a potentially infinite partition $p$, denoted $\Age(p)$, is the set of finite partitions whose Ferrers diagrams embed into the Ferrers diagram of $p$ (the term \emph{age} dates to Fra{\"i}ss{\'e}~\cite{fraisse:sur-lextension-:}). An example of containment of a finite Ferrers diagram into an infinite one, together with the corresponding set containment, is presented in Figure~\ref{fig-ptn-age}.
+
+\begin{figure}[ht]
+\captionsetup{justification=centering}
+	\begin{tikzpicture}[scale={1/3}]
+		\ferrers{4,2,1,1}
+		
+		\node at (6.5,-2) {$\le$};
+		\begin{scope}[shift={(7.5,0.5)}]
+			\foreach \d in {0.25, 0.50, 0.75} {
+				\filldraw[black] ({6+\d},-0.5) circle [radius=0.05cm];
+				\filldraw[black] ({6+\d},-1.5) circle [radius=0.05cm];
+				\filldraw[black] (1.5,-{6+\d}) circle [radius=0.05cm];
+				% \filldraw[black] (2.5,-{6+\d}) circle [radius=0.05cm];
+			}
+			\ferrers{5,5,4,1,1}
+			\ferrersfilled{4,2,1,1}
+		\end{scope}
+		
+		\begin{scope}[shift={(6.5,-6.5)}]
+			\node at (-3.5,0) {$4211$};
+			\node at ( 0  ,0) {$\in$};
+			\node at ( 5  ,0) {$\Age(\omega \omega 4 1^\omega)$};
+		\end{scope}
+	\end{tikzpicture}
+\caption{An example of containment of a finite Ferrers digram into an infinite one.}
+\label{fig-ptn-age}
+\end{figure}
+
+We show that every proper class of partitions admits linear-size universal partitions in two parts. First, we show that every proper class of partitions is contained in an age of the form $\Age(\omega^k \ell^\omega)$ in Proposition~\ref{prop-ptn-age-containment}, and then that every such age admits linear-size universal partitions in Theorem~\ref{thm-ptn-universal-proper}.
+\begin{proposition}
+\label{prop-ptn-age-containment}
+	For any proper partition class $\P$, there are nonnegative integers $k, \ell$ such that $\P \subseteq \Age(\omega^k \ell^\omega)$.
+\end{proposition}
+\begin{proof}
+	Let $\ell$ be the largest integer such that $\P$ contains the partition $\ell^n$ for all $n$ and let $k$ be the largest integer such that $\P$ contains $(\ell+1)^k$. We claim that $\P \subseteq \Age(\omega^k \ell^\omega)$. For any partition $p \in \P$, we must have $p(n) \le \ell$ for each $n > k$, as otherwise $p$ contains $(\ell+1)^n$, and as $\P$ is closed downward, we would have $(\ell+1)^n \in \P$, a contradiction. The condition that $p(n) \le \ell$ for each $n > k$ is precisely the condition that defines containment in $\Age(\omega^k \ell^\omega)$, and thus $p \in \Age(\omega^k \ell^\omega)$, completing the proof.
+\end{proof}
+
+\begin{theorem}
+\label{thm-ptn-universal-proper}
+	Let $\P = \Age(\omega^k \ell^\omega)$ be a class of partitions. Then for $m \ge k\ell$, the smallest $\P_m$-universal partitions have size
+	\[
+		\u_{\P}(m)
+		= 
+		\sum_{i=1}^{k} \floor{\frac{m}{i}} + \sum_{i=1}^{\ell} \floor{\frac{m}{i}} - k\ell
+	\]
+	and thus $\u_{\P}(m) = \oTheta{m}$.
+\end{theorem}
+
+Before proving Theorem~\ref{thm-ptn-universal-proper}, observe that if $P \subseteq Q$ are sets of partitions and $q$ is a $Q$-universal partition, then $q$ is $P$-universal as well, as $q$ necessarily contains each partition in $P$. Thus, by proving that each age of the form $\Age(\omega^k \ell^\omega)$ admits universal partitions of linear size, Proposition~\ref{prop-ptn-age-containment} implies that every proper partition class does as well.
+
+\newenvironment{proof-of-thm-ptn-universal-proper}{%
+	\medskip\noindent {\it Proof of Theorem~\ref{thm-ptn-universal-proper}.\/}%
+}{%
+	\qed\bigskip%
+}
+\begin{proof-of-thm-ptn-universal-proper}
+	By Observation~\ref{obs-ptn-join}, the unique smallest $\P_m$-universal partition $P$ has its $i\th$ part equal to the largest $i\th$ part among all partitions in $\P_m$. The only restriction on partitions in $\P$ is that their $i\th$ part is at most $\ell$ for $i > k$, so we have
+	\[
+		P(i)
+		=
+		\begin{cases}
+			\floor{\dfrac{m}{i}}                          & \text{if $1 \le i \le k$,} \\
+			\min\left\{\floor{\dfrac{m}{i}}, \ell\right\} & \text{if $k  <  i \le m$.}
+		\end{cases}
+	\]
+	As $\floor{\dfrac{m}{i}} \ge \ell$ if and only if $\floor{\dfrac{m}{\ell}} \ge i$, this may be simplified to
+	\[
+		P(i)
+		=
+		\begin{cases}
+			\floor{\dfrac{m}{i}} & \text{if $1 \le i \le k$,} \\
+			\ell                 & \text{if $k  <  i \le \floor{\dfrac{m}{\ell}}$,} \\
+			\floor{\dfrac{m}{i}} & \text{if $\floor{\dfrac{m}{\ell}} < i \le m$.}
+		\end{cases}
+	\]
+	Thus, for $m \ge k\ell$, the size of $P$ is
+	\[
+		\size{P} 
+		= 
+		\underbrace{\floor{\dfrac{m}{1}} + \floor{\dfrac{m}{2}} + \cdots + \floor{\dfrac{m}{k}} + \ell + \ell + \cdots + \ell}_{\text{$\floor{\dfrac{m}{\ell}}$ terms}} + \floor{\dfrac{m}{\floor{\tfrac{m}{\ell}}+1}} + \cdots + \floor{\dfrac{m}{m}}.
+	\]
+
+	The sum of the parts $P(k+1), \cdots, P(m)$ is equal to $\sum_{i = 1}^{\ell} \floor{\frac{m}{i}} - k\ell$, as these correspond to the first $\ell$ parts of the conjugate of $P$, which are $\floor{\dfrac{m}{i}}$ for $1 \le i \le \ell$, and we need to subtract those cells that overlap with the first $k$ parts of $P$. As $m \ge k\ell$, we have both $\floor{\frac{m}{k}} \ge \ell$ and $\floor{\frac{m}{\ell}} \ge k$, and thus
+	\[
+		\size{P}
+		= 
+		\sum_{i=1}^{k} \floor{\frac{m}{i}} + \sum_{i=1}^{\ell} \floor{\frac{m}{i}} - k\ell.
+	\]
+	For all $n$ and $j$, the inequality
+	\[
+		\log(j+1)n-j
+		\le
+		\sum_{i = 1}^{j} \floor{\frac{n}{j}} 
+		\le 
+		\left(\log(j)+1\right)n,
+	\]
+	holds, and thus $\size{P} = \oTheta{m}$, as desired.
+\end{proof-of-thm-ptn-universal-proper}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Concluding Remarks}
+\label{sec-ptn-conclusion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Observation~\ref{obs-ptn-join} establishes that the smallest $m$-universal partition is unique, and Theorem~\ref{thm-ptn-universal} establishes its precise size for all $m$. For any proper class of partitions $\P$, there are proper $m$-universal partitions for $\P$ for all $m$ if and only if $\P$ satisfies the joint-embedding property, which is equivalent to $\P$ being the age of some potentially infinite partition $u$, as the following result of Fra{\"i}ss{\'e} (which we have specialized to our context here) shows:
+\begin{theorem}[Fra{\"i}ss{\'e}~\cite{fraisse:sur-lextension-:}; see also Hodges~{\cite[Section 7.1]{hodges:model-theory:}}] 
+	The following are equivalent for a class $\P$ of integer partitions or compositions:
+	\begin{enumerate}
+		\item $\P$ cannot be expressed as the union of two proper subclasses,
+		\item $\P$ satisfies the \emph{joint embedding property}, meaning that for every $a, b \in \P$ there is some $c \in \P$ such that $a, b \le c$, and 
+		\item $\P = \Age(u)$ for some word $u \in (\mathbb{P} \cup \{n^\omega \st n \in \mathbb{P}\} \cup \{\omega, \omega^\omega\})^\ast$.
+	\end{enumerate}
+\end{theorem}
+
